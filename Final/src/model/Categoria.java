@@ -9,6 +9,6 @@ package model;
  *
  * @author duda2 
  */
-public class Categoria enum {    
+public enum Categoria  {    
     ROMANCE, TERROR, ACAO, SUSPENSE, COMEDIA, INFANTIL, ACADEMICO;
 }
