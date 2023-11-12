@@ -9,6 +9,24 @@ package model;
  *
  * @author duda2 
  */
-public enum Categoria  {    
-    ROMANCE, TERROR, ACAO, SUSPENSE, COMEDIA, INFANTIL, ACADEMICO;
+public enum Categoria  {        
+   ROMANCE("ROMANCE"),
+   TERROR("TERROR"),
+   ACAO("AÇÃO"),
+   SUSPENSE("SUSPENSE"),
+   COMEDIA("COMÉDIA"), 
+   INFANTIL("INFANTIL"),
+   ACADEMICO("ACADEMICO");
+    
+    public String Categoria; 
+
+    private Categoria(String Categoria) {
+        this.Categoria = Categoria;
+    }
+
+    public String getCategoria() {
+        return Categoria;
+    }
+    
+   
 }

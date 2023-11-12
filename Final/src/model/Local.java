@@ -18,7 +18,7 @@ public class Local extends Termo {
 
     public void setDescricaoHistoria(String descricaoHistoria) {
         if (descricaoHistoria == null || descricaoHistoria.isEmpty()) {
-            throw new IllegalArgumentException("A caracteristica não pode estar vazia");
+            throw new IllegalArgumentException("A descrição histórica não pode estar vazia");
         }
 
         this.descricaoHistoria = descricaoHistoria;
