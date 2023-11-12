@@ -14,16 +14,19 @@ public class Obra {
     private int anoLancamento;
     private Categoria categoria;
 
-    public Obra(String titulo, int anoLancamento) {
+    public Obra(String titulo, int anoLancamento, Categoria categoria) {
         setAnoLancamento(anoLancamento);
         setTitulo(titulo);
+        setCategoria(categoria);
     }
-
+    public Obra(){}
+    
     public String getTitulo() {
         return titulo;
     }
 
     public void setTitulo(String titulo) {
+        if(titulo == null || titulo.isEmpty()) throw new IllegalArgumentException("O Titulo não pode ser vazio!");
         this.titulo = titulo;
     }
 
@@ -32,7 +35,16 @@ public class Obra {
     }
 
     public void setAnoLancamento(int anoLancamento) {
+        if(anoLancamento == 0 )throw new IllegalArgumentException("O ano de lançamento não pode ser vazio!");
         this.anoLancamento = anoLancamento;
+    }
+    
+    public void setCategoria(Categoria categoria){
+        this.categoria = categoria;
+    }
+    
+    public String getCategoria(){
+        return categoria.name();
     }
 
 }

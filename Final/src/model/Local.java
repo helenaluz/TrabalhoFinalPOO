@@ -12,6 +12,11 @@ public class Local extends Termo {
 
     private String descricaoHistoria;
 
+    public Local(String nome, String descricao, Obra obra, String descricaoHistorica){
+        super(nome, descricao, obra);
+        setDescricaoHistoria(descricaoHistorica);
+    }
+    
     public String getDescricaoHistoria() {
         return descricaoHistoria;
     }

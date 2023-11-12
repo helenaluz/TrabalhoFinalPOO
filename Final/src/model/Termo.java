@@ -12,9 +12,23 @@ import java.util.ArrayList;
  */
 public class Termo {
 
+ 
     private String nome;
     private String descricao;
     private ArrayList<Obra> obras = new ArrayList<Obra>();
+
+    public Termo(String nome, String descricao,  Obra obra) {
+        try{
+            setNome(nome);
+            setDescricao(descricao);
+            AddObra(obra);
+        }
+        catch(IllegalArgumentException ex){
+            System.out.println(ex.getMessage());
+        }
+    }
+       
+    public Termo(){}
 
     public String getNome() {
         return nome;
@@ -37,34 +51,13 @@ public class Termo {
         }
         this.descricao = descricao;
     }
-
-    public void AdicionarTermo() {
-    }
-
-    ; 
     
-    public void RemoverTermos() {
-    }
-
-    ; 
+    public void AddObra(Obra obra){
+        if (obras.stream().anyMatch(x -> x.getTitulo().equals(obra.getTitulo()))) throw new IllegalArgumentException("Obra com nome "+obra.getTitulo()+" já adicionada!");
+        obras.add(obra);
+    };
     
-    public void ConsultarTermo() {
+    public ArrayList<Obra> getObras(){
+        return obras;
     }
-
-    ; 
-    
-    public void ListarTermo(){
-    }
-
-    ; 
-    
-    public void PesquisarTermo(String Nome) {
-    }
-
-    ; 
-    
-    public void Categorizar(String tipo) {
-    }
-;
-
 }
