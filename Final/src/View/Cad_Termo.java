@@ -4,6 +4,9 @@
  */
 package View;
 
+import javax.swing.JOptionPane;
+import model.Termo;
+
 /**
  *
  * @author duda2
@@ -29,17 +32,18 @@ public class Cad_Termo extends javax.swing.JFrame {
         btRemover = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        panel1 = new java.awt.Panel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        label1 = new java.awt.Label();
+        pnCadTermo = new java.awt.Panel();
+        lbNome = new javax.swing.JLabel();
+        lbDescricao = new javax.swing.JLabel();
+        lbObra = new javax.swing.JLabel();
+        txtNome = new javax.swing.JTextField();
+        txtDescricao = new javax.swing.JTextField();
+        txtObra = new javax.swing.JTextField();
+        btSalvar = new javax.swing.JButton();
+        lbTituloTela = new java.awt.Label();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setName("jfTermo"); // NOI18N
 
         btRemover.setText("Remover");
         btRemover.setName("btRemover"); // NOI18N
@@ -65,70 +69,75 @@ public class Cad_Termo extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jLabel2.setText("Nome:");
-        jLabel2.setToolTipText("");
-        jLabel2.setName("lbnome"); // NOI18N
+        lbNome.setText("Nome:");
+        lbNome.setToolTipText("");
+        lbNome.setName("lbnome"); // NOI18N
 
-        jLabel3.setText("Descrição:");
-        jLabel3.setToolTipText("");
-        jLabel3.setName("lbdescricao"); // NOI18N
+        lbDescricao.setText("Descrição:");
+        lbDescricao.setToolTipText("");
+        lbDescricao.setName("lbDescricao");
 
-        jTextField2.setName("txtnome"); // NOI18N
+        lbObra.setText("Obra:");
+        lbObra.setToolTipText("");
+        lbObra.setName("lbobra"); // NOI18N
 
-        jTextField1.setName("txtnome"); // NOI18N
+        txtNome.setName("txtNome");
 
-        jTextField3.setName("txtnome"); // NOI18N
+        txtDescricao.setName("txtnome"); // NOI18N
 
-        jLabel4.setText("Obra:");
-        jLabel4.setToolTipText("");
-        jLabel4.setName("lbobra"); // NOI18N
+        txtObra.setName("txtObra");
 
-        jButton1.setText("Salvar");
-        jButton1.setName("btsalvar"); // NOI18N
+        btSalvar.setText("Incluir");
+        btSalvar.setName("btSalvar");
+        btSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSalvarActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
-        panel1.setLayout(panel1Layout);
-        panel1Layout.setHorizontalGroup(
-            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnCadTermoLayout = new javax.swing.GroupLayout(pnCadTermo);
+        pnCadTermo.setLayout(pnCadTermoLayout);
+        pnCadTermoLayout.setHorizontalGroup(
+            pnCadTermoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnCadTermoLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnCadTermoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbNome, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbDescricao, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lbObra, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
-                    .addComponent(jTextField3))
+                .addGroup(pnCadTermoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtDescricao)
+                    .addComponent(txtNome, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
+                    .addComponent(txtObra))
                 .addGap(13, 13, 13))
-            .addGroup(panel1Layout.createSequentialGroup()
+            .addGroup(pnCadTermoLayout.createSequentialGroup()
                 .addGap(253, 253, 253)
-                .addComponent(jButton1)
+                .addComponent(btSalvar)
                 .addContainerGap(268, Short.MAX_VALUE))
         );
-        panel1Layout.setVerticalGroup(
-            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel1Layout.createSequentialGroup()
+        pnCadTermoLayout.setVerticalGroup(
+            pnCadTermoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnCadTermoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnCadTermoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbNome)
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnCadTermoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbDescricao)
+                    .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                .addGroup(pnCadTermoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtObra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbObra))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btSalvar)
                 .addContainerGap())
         );
 
-        label1.setFont(new java.awt.Font("Microsoft JhengHei", 1, 48)); // NOI18N
-        label1.setText("Cadastro de Termo");
+        lbTituloTela.setFont(new java.awt.Font("Microsoft JhengHei", 1, 48)); // NOI18N
+        lbTituloTela.setText("Cadastro de Termo");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -145,19 +154,19 @@ public class Cad_Termo extends javax.swing.JFrame {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 644, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(23, 23, 23)
-                                .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(pnCadTermo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(142, 142, 142)
-                        .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lbTituloTela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(79, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(25, Short.MAX_VALUE)
-                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lbTituloTela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23)
-                .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnCadTermo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -168,6 +177,60 @@ public class Cad_Termo extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
+        // TODO add your handling code here:
+        VerificaCampo(); 
+        
+            /*Termo termo = new Termo();
+            termo.setNome(txtNome.getText());
+            termo.setDescricao(txtDescricao.getText());
+            
+            termo.((txtObra.getText()));*/
+            
+           /* main Mains = new main();
+            Mains.AdicionarTermo(termo.getNome(),termo. );
+                   
+            bairro.setNome(jTextFieldNomeBairro.getText());
+            bairro.setCoeficienteIptu(Double.parseDouble(jTextFieldCoeficienteBairro.getText()));
+
+            Imovel imovel = new Imovel();
+            imovel.setEndereco(jTextfieldEndereco.getText());
+            imovel.setArea(Integer.parseInt(jTextFieldArea.getText()));
+            imovel.setBairro(bairro);
+
+            if(jRadioButtonComercial.isSelected()) {
+                imovel.setFinalidade(Finalidade.COMERCIAL);
+            } else if (jRadioButtonResidencial.isSelected()) {
+                imovel.setFinalidade(Finalidade.RESIDENCIAL);
+            } else if (jRadioButtonIndustrial.isSelected()) {
+               imovel.setFinalidade(Finalidade.INDUSTRIAL);
+            }*/
+        
+    }//GEN-LAST:event_btSalvarActionPerformed
+
+    private String VerificaCampo(){
+       String VerificaCampo = " "; 
+           
+       if (txtNome.getText().equals("") || txtDescricao.getText().equals("") || 
+          txtObra.getText().equals("")){
+           
+         VerificaCampo = "Campos que precisam ser preenchidos:";
+         
+         if(txtNome.getText().equals("")){
+             VerificaCampo +=  "\nCampo nome está vazio.";               
+         }
+         if(txtDescricao.getText().equals("")){
+             VerificaCampo += "\nCampo descrição está vazio.";               
+         }
+         if(txtObra.getText().equals("")){
+             VerificaCampo += "\nCampo obra está vazio.";               
+         }
+         
+           JOptionPane.showMessageDialog(this,  VerificaCampo , "ERRO",  JOptionPane.ERROR_MESSAGE);
+       }
+               return VerificaCampo;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -205,16 +268,16 @@ public class Cad_Termo extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btRemover;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JButton btSalvar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private java.awt.Label label1;
-    private java.awt.Panel panel1;
+    private javax.swing.JLabel lbDescricao;
+    private javax.swing.JLabel lbNome;
+    private javax.swing.JLabel lbObra;
+    private java.awt.Label lbTituloTela;
+    private java.awt.Panel pnCadTermo;
+    private javax.swing.JTextField txtDescricao;
+    private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtObra;
     // End of variables declaration//GEN-END:variables
 }
