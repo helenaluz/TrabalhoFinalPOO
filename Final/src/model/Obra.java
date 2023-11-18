@@ -1,14 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
-/**
- *
- * @author duda2
- */
-public class Obra {
+import java.io.Serializable;
+import java.util.Objects;
+
+public class Obra implements Serializable {
 
     private String titulo;
     private int anoLancamento;
@@ -19,14 +14,18 @@ public class Obra {
         setTitulo(titulo);
         setCategoria(categoria);
     }
-    public Obra(){}
-    
+
+    public Obra() {}
+
     public String getTitulo() {
         return titulo;
     }
 
     public void setTitulo(String titulo) {
-        if(titulo == null || titulo.isEmpty()) throw new IllegalArgumentException("O Titulo não pode ser vazio!");
+        Objects.requireNonNull(titulo, "O título não pode ser nulo!");
+        if (titulo.isEmpty()) {
+            throw new IllegalArgumentException("O título não pode ser vazio!");
+        }
         this.titulo = titulo;
     }
 
@@ -35,16 +34,17 @@ public class Obra {
     }
 
     public void setAnoLancamento(int anoLancamento) {
-        if(anoLancamento == 0 )throw new IllegalArgumentException("O ano de lançamento não pode ser vazio!");
+        if (anoLancamento == 0) {
+            throw new IllegalArgumentException("O ano de lançamento não pode ser zero!");
+        }
         this.anoLancamento = anoLancamento;
     }
-    
-    public void setCategoria(Categoria categoria){
+
+    public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
-    
-    public String getCategoria(){
+
+    public String getCategoria() {
         return categoria.name();
     }
-
 }

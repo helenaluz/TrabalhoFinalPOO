@@ -4,17 +4,18 @@
  */
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author duda2
  */
-public class Termo {
-
- 
+public class Termo implements Serializable  {
+    
     private String nome;
     private String descricao;
+    
     private ArrayList<Obra> obras = new ArrayList<Obra>();
 
     public Termo(String nome, String descricao,  Obra obra) {

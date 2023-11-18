@@ -4,13 +4,14 @@
  */
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author duda2
  */
-public class Personagem  extends Termo{    
+public class Personagem  extends Termo implements Serializable {    
     private ArrayList<String> caracteristicas = new ArrayList<String>();
     private ArrayList<String> atores = new ArrayList<String>();
     private String feitos; 

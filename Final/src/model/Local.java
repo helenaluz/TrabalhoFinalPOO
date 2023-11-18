@@ -4,11 +4,13 @@
  */
 package model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author duda2
  */
-public class Local extends Termo {
+public class Local extends Termo implements Serializable {
 
     private String descricaoHistoria;
 
