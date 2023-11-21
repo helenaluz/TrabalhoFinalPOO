@@ -7,9 +7,9 @@ public class Obra implements Serializable {
 
     private String titulo;
     private int anoLancamento;
-    private Categoria categoria;
+    private String categoria;
 
-    public Obra(String titulo, int anoLancamento, Categoria categoria) {
+    public Obra(String titulo, int anoLancamento, String categoria) {
         setAnoLancamento(anoLancamento);
         setTitulo(titulo);
         setCategoria(categoria);
@@ -40,11 +40,11 @@ public class Obra implements Serializable {
         this.anoLancamento = anoLancamento;
     }
 
-    public void setCategoria(Categoria categoria) {
+    public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
 
     public String getCategoria() {
-        return categoria.name();
+        return this.categoria;
     }
 }
