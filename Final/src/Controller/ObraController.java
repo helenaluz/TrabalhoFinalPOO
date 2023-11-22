@@ -15,7 +15,9 @@ import java.util.ArrayList;
 import model.Obra;
 
 /**
- *
+ * Controlador de Obra, lida com adições, consultas, deletações e arquivco
+ * 
+ * 
  * @author Samsung
  */
 public class ObraController {
@@ -26,7 +28,15 @@ public class ObraController {
     
     ArrayList<Obra> obras = new ArrayList<>();
 
-     public void AdicionarObra(String titulo, int ano, String categoria){
+
+    /**
+     * Adiciona um obra ao arquivo
+     * 
+     * @param titulo titúlo da obra
+     * @param ano ano da obra
+     * @param categoria categoria da obra
+     */
+    public void AdicionarObra(String titulo, int ano, String categoria){
         try{
             model.Obra obra = new model.Obra(titulo, ano, categoria);
             if(this.obras.stream().anyMatch(x -> x.getTitulo().equals(titulo))) throw new IllegalArgumentException("Obra com o mesmo titulo já existe na coleção!");
@@ -43,6 +53,12 @@ public class ObraController {
         }
     }
     
+    /**
+     *
+     * Remove a obra do arquivo
+     * 
+     * @param obra passa um tipo obra para remover essa obra expecifica
+     */
     public void RemoverObra(model.Obra obra){
         try{
             if(!this.obras.stream().anyMatch(x -> x == obra)) throw new IllegalArgumentException("Obra não existe na coleção!");
@@ -54,6 +70,12 @@ public class ObraController {
         }
     }
     
+    /**
+     * Consulta das obra do arquivo pelo título
+     * 
+     * @param titulo String que você passa para ver tal titulo
+     * @return  Obra com tal titulo
+     */
     public model.Obra VerObraPorTitulo(String titulo){
        try{
            return this.obras.stream().filter(x -> x.getTitulo().equals(titulo)).findFirst().orElseThrow(() -> new IllegalArgumentException("Obra com titulo: "+titulo+" não encontrado!"));
@@ -64,6 +86,10 @@ public class ObraController {
         return null;
     }
     
+    /**
+     * Retorna todas as obras do arquivo
+     * @return Lista de todas as obras
+     */
     public ArrayList<model.Obra> PegarTodasObras(){
         try{
             if(this.obras == null || this.obras.size() == 0) throw new IllegalArgumentException("Não há obras cadastradas no sistema!");
@@ -75,6 +101,9 @@ public class ObraController {
         return null;
     }
     
+    /**
+     * Carregar obras do arquivo para uma lista
+     */
     private void carregarObrasDoArquivo() {
     obras.clear();
     try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("obras.dat"))) {
@@ -95,6 +124,9 @@ public class ObraController {
     
     
 }
+    /**
+     * Atualiza o arquivo, sobre escreve o que esta no arquivo com o que esta na lista
+     */
     private void atualizarArquivo() {
     try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("obras.dat"))) {
         for (Obra obraExistente : this.obras) {
@@ -105,3 +137,4 @@ public class ObraController {
     }
 }
 }
+
