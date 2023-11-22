@@ -4,6 +4,11 @@
  */
 package View;
 import javax.swing.JOptionPane;
+import Controller.TermoController;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.*;
+import model.Obra;
+import model.Local;
 /**
  *
  * @author duda2
@@ -16,7 +21,11 @@ public class Cad_Local extends javax.swing.JFrame {
     public Cad_Local() {
         initComponents();
     }
-
+    
+    
+    
+    TermoController termo = new TermoController(); 
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -33,6 +42,8 @@ public class Cad_Local extends javax.swing.JFrame {
         txtDescricao = new javax.swing.JTextField();
         txtDescDetalhada = new javax.swing.JTextField();
         btIncluir = new javax.swing.JButton();
+        lbObra = new javax.swing.JLabel();
+        cbObra = new javax.swing.JComboBox<>();
         lbTitulo = new java.awt.Label();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -64,6 +75,11 @@ public class Cad_Local extends javax.swing.JFrame {
 
         btRemover.setText("Remover");
         btRemover.setName("btRemover"); // NOI18N
+        btRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btRemoverActionPerformed(evt);
+            }
+        });
 
         lbNome.setText("Nome:");
         lbNome.setToolTipText("");
@@ -91,26 +107,33 @@ public class Cad_Local extends javax.swing.JFrame {
             }
         });
 
+        lbObra.setText("Obra");
+
+        cbObra.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout pn_CadastroLayout = new javax.swing.GroupLayout(pn_Cadastro);
         pn_Cadastro.setLayout(pn_CadastroLayout);
         pn_CadastroLayout.setHorizontalGroup(
             pn_CadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pn_CadastroLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btIncluir)
+                .addGap(264, 264, 264))
             .addGroup(pn_CadastroLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(pn_CadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lbObra, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbNome, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbDescricao)
                     .addComponent(lbDescDetalhada))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pn_CadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtNome)
-                    .addComponent(txtDescricao)
-                    .addComponent(txtDescDetalhada, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pn_CadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pn_CadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txtNome)
+                        .addComponent(txtDescricao)
+                        .addComponent(txtDescDetalhada, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbObra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(23, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pn_CadastroLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btIncluir)
-                .addGap(269, 269, 269))
         );
         pn_CadastroLayout.setVerticalGroup(
             pn_CadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,8 +151,11 @@ public class Cad_Local extends javax.swing.JFrame {
                     .addComponent(lbDescDetalhada)
                     .addComponent(txtDescDetalhada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btIncluir)
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addGroup(pn_CadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbObra)
+                    .addComponent(cbObra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addComponent(btIncluir))
         );
 
         lbTitulo.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 48)); // NOI18N
@@ -142,32 +168,30 @@ public class Cad_Local extends javax.swing.JFrame {
             .addGroup(pnLocalLayout.createSequentialGroup()
                 .addGroup(pnLocalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnLocalLayout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addGroup(pnLocalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(spLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 963, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(pnLocalLayout.createSequentialGroup()
-                                .addGap(159, 159, 159)
-                                .addComponent(pn_Cadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnLocalLayout.createSequentialGroup()
-                                .addGap(433, 433, 433)
-                                .addComponent(btRemover))))
+                        .addGap(32, 32, 32)
+                        .addComponent(pn_Cadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnLocalLayout.createSequentialGroup()
-                        .addGap(295, 295, 295)
+                        .addContainerGap()
+                        .addComponent(spLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 716, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnLocalLayout.createSequentialGroup()
+                        .addGap(320, 320, 320)
+                        .addComponent(btRemover))
+                    .addGroup(pnLocalLayout.createSequentialGroup()
+                        .addGap(159, 159, 159)
                         .addComponent(lbTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(632, Short.MAX_VALUE))
         );
         pnLocalLayout.setVerticalGroup(
             pnLocalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnLocalLayout.createSequentialGroup()
-                .addContainerGap(34, Short.MAX_VALUE)
                 .addComponent(lbTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
-                .addComponent(pn_Cadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(spLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(pn_Cadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(spLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btRemover)
-                .addContainerGap())
+                .addGap(320, 320, 320))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -180,23 +204,61 @@ public class Cad_Local extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(pnLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(pnLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(291, 291, 291))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+
     private void btIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btIncluirActionPerformed
         // TODO add your handling code here:
       VerificaCampo(); 
-      
-         
-         
+      /*termo.AdicionarLocal(txtNome.getText(),
+                              txtDescricao.getText(), (Obra) cbObra.getSelectedItem(), 
+                             txtDescDetalhada.getText()); */     
+       Tabela(1);
+     
     }//GEN-LAST:event_btIncluirActionPerformed
+
+    private void btRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverActionPerformed
+         // TODO add your handling code here:
+        Tabela(2);
+       
+    }//GEN-LAST:event_btRemoverActionPerformed
  
+    private void Tabela(int SAU){
+        int sau = SAU;
+        // verifica para popular 
+        
+        switch (sau) {
+            case 1:
+            DefaultTableModel Locais = (DefaultTableModel) tbLocal.getModel();    
+            String[] newrow = {txtNome.getText() , txtDescricao.getText() , txtDescDetalhada.getText()};
+            Locais.addRow(newrow);            
+                break;
+            case 2:
+             int result = JOptionPane.showConfirmDialog(null,"Deseja Excluir a linha ? ","Excluir",JOptionPane.YES_NO_CANCEL_OPTION); 
+             if(result == JOptionPane.YES_OPTION){               
+                int linhaSelecionada = tbLocal.getSelectedRow();
+             if (linhaSelecionada != -1) { // se não estiver em  nenhuma linha então 
+                   ((DefaultTableModel) tbLocal.getModel()).removeRow(linhaSelecionada);
+            }
+            }   
+            default:
+                throw new  IllegalArgumentException("Tentou né");
+        }
+        
+        
+    
+       
+       
+    }
+    
     private String VerificaCampo(){
          String VerificaCampo = " " ; 
         
@@ -258,9 +320,11 @@ public class Cad_Local extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btIncluir;
     private javax.swing.JButton btRemover;
+    private javax.swing.JComboBox<String> cbObra;
     private javax.swing.JLabel lbDescDetalhada;
     private javax.swing.JLabel lbDescricao;
     private javax.swing.JLabel lbNome;
+    private javax.swing.JLabel lbObra;
     private java.awt.Label lbTitulo;
     private javax.swing.JPanel pnLocal;
     private java.awt.Panel pn_Cadastro;

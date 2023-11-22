@@ -4,12 +4,6 @@
   <NonVisualComponents>
     <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
     </Component>
-    <Component class="javax.swing.ButtonGroup" name="buttonGroup2">
-    </Component>
-    <Component class="javax.swing.ButtonGroup" name="buttonGroup7">
-    </Component>
-    <Component class="javax.swing.ButtonGroup" name="buttonGroup8">
-    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
@@ -82,19 +76,18 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" alignment="0" pref="551" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
+                                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                                   <Component id="rbLocal" linkSize="3" min="-2" pref="67" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jRadioButton6" linkSize="3" min="-2" pref="69" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="rbObra" linkSize="3" min="-2" pref="69" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                                   <Component id="rbPersonagem" linkSize="3" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                                   <Component id="rbTermo" linkSize="3" min="-2" pref="66" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jRadioButton1" linkSize="3" min="-2" pref="98" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="1" attributes="0">
@@ -108,7 +101,7 @@
                                   </Group>
                               </Group>
                           </Group>
-                          <EmptySpace min="0" pref="25" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="66" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -120,12 +113,11 @@
               <Group type="102" alignment="0" attributes="0">
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="rbTermo" linkSize="4" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="rbPersonagem" linkSize="4" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jRadioButton6" linkSize="4" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="rbObra" linkSize="4" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="rbLocal" linkSize="4" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jRadioButton1" linkSize="4" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="rbPersonagem" linkSize="4" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="lbNome" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextField1" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -150,40 +142,18 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="jTable1">
+            <Component class="javax.swing.JTable" name="tbPesquisa">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="3" rowCount="4">
-                    <Column editable="true" title="Nome" type="java.lang.String"/>
-                    <Column editable="true" title="Descri&#xe7;&#xe3;o" type="java.lang.String"/>
-                    <Column editable="true" title="Descri&#xe7;&#xe3;o Hist&#xf3;rica" type="java.lang.String"/>
-                  </Table>
+                  <Table columnCount="0" rowCount="4"/>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
-                  <TableColumnModel selectionModel="1">
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                  </TableColumnModel>
+                  <TableColumnModel selectionModel="1"/>
                 </Property>
-                <Property name="name" type="java.lang.String" value="tb_pesquisa" noResource="true"/>
+                <Property name="columnSelectionAllowed" type="boolean" value="true"/>
+                <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="&quot;tbPesquisa&quot;" type="code"/>
+                </Property>
                 <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
@@ -198,14 +168,20 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Local"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rbLocalActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JRadioButton" name="jRadioButton6">
+        <Component class="javax.swing.JRadioButton" name="rbObra">
           <Properties>
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="buttonGroup1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Obra"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rbObraActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="rbPersonagem">
           <Properties>
@@ -214,6 +190,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Personagem"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rbPersonagemActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="rbTermo">
           <Properties>
@@ -222,6 +201,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Termo"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rbTermoActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lbNome">
           <Properties>
@@ -241,12 +223,6 @@
         <Component class="javax.swing.JTextField" name="jTextField2">
           <Properties>
             <Property name="name" type="java.lang.String" value="txtDescricao" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JRadioButton" name="jRadioButton1">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Todos"/>
-            <Property name="name" type="java.lang.String" value="rbTodos" noResource="true"/>
           </Properties>
         </Component>
       </SubComponents>

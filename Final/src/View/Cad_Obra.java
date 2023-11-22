@@ -5,6 +5,8 @@
 package View;
 
 import javax.swing.JOptionPane;
+import Controller.ObraController;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -18,6 +20,8 @@ public class Cad_Obra extends javax.swing.JFrame {
     public Cad_Obra() {
         initComponents();
     }
+    
+    ObraController obra = new ObraController(); 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -29,22 +33,17 @@ public class Cad_Obra extends javax.swing.JFrame {
     private void initComponents() {
 
         lbTituloTela = new java.awt.Label();
-        pnObra = new javax.swing.JPanel();
-        spObra = new javax.swing.JScrollPane();
-        tbObra = new javax.swing.JTable();
-        btRemover = new javax.swing.JButton();
         pnCadObra = new java.awt.Panel();
-        lbNome = new javax.swing.JLabel();
-        lbDescricao = new javax.swing.JLabel();
         lbTitulo = new javax.swing.JLabel();
         lbAnoLancamento = new javax.swing.JLabel();
         lbCategoria = new javax.swing.JLabel();
-        txtNome = new javax.swing.JTextField();
-        txtDescricao = new javax.swing.JTextField();
         txtTitulo = new javax.swing.JTextField();
         txtAnoLanca = new javax.swing.JTextField();
-        cbCategoria = new javax.swing.JComboBox<>();
         btIncluir = new javax.swing.JButton();
+        txtCategoria = new javax.swing.JTextField();
+        spObra = new javax.swing.JScrollPane();
+        tbObra = new javax.swing.JTable();
+        btRemover = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName("jfObra"); // NOI18N
@@ -52,7 +51,75 @@ public class Cad_Obra extends javax.swing.JFrame {
         lbTituloTela.setFont(new java.awt.Font("Microsoft Tai Le", 1, 48)); // NOI18N
         lbTituloTela.setText("Cadastro de Obra");
 
-        pnObra.setName("pn_obra"); // NOI18N
+        lbTitulo.setText("Título:");
+        lbTitulo.setToolTipText("");
+        lbTitulo.setName("lb_titulo"); // NOI18N
+
+        lbAnoLancamento.setText("Ano de lançamento:");
+        lbAnoLancamento.setName("lbanolancamento"); // NOI18N
+
+        lbCategoria.setText("Categoria:");
+        lbCategoria.setName("lbCategoria"); // NOI18N
+
+        txtTitulo.setName("txttitulo"); // NOI18N
+
+        txtAnoLanca.setName("txtano"); // NOI18N
+
+        btIncluir.setText("Incluir");
+        btIncluir.setName("btsalvar"); // NOI18N
+        btIncluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btIncluirActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnCadObraLayout = new javax.swing.GroupLayout(pnCadObra);
+        pnCadObra.setLayout(pnCadObraLayout);
+        pnCadObraLayout.setHorizontalGroup(
+            pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnCadObraLayout.createSequentialGroup()
+                .addGroup(pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnCadObraLayout.createSequentialGroup()
+                        .addGap(79, 79, 79)
+                        .addComponent(lbTitulo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtTitulo))
+                    .addGroup(pnCadObraLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbCategoria, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lbAnoLancamento, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtAnoLanca)
+                            .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btIncluir))))
+                .addContainerGap(214, Short.MAX_VALUE))
+        );
+
+        pnCadObraLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtAnoLanca, txtTitulo});
+
+        pnCadObraLayout.setVerticalGroup(
+            pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnCadObraLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbTitulo)
+                    .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbAnoLancamento)
+                    .addComponent(txtAnoLanca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbCategoria)
+                    .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addComponent(btIncluir)
+                .addContainerGap(66, Short.MAX_VALUE))
+        );
+
+        pnCadObraLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtAnoLanca, txtTitulo});
 
         tbObra.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -73,205 +140,110 @@ public class Cad_Obra extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
+        tbObra.setName(""); // NOI18N
         spObra.setViewportView(tbObra);
 
         btRemover.setText("Remover");
-        btRemover.setName("btRemover"); // NOI18N
-
-        javax.swing.GroupLayout pnObraLayout = new javax.swing.GroupLayout(pnObra);
-        pnObra.setLayout(pnObraLayout);
-        pnObraLayout.setHorizontalGroup(
-            pnObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnObraLayout.createSequentialGroup()
-                .addGap(288, 288, 288)
-                .addComponent(btRemover)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(pnObraLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(spObra)
-                .addContainerGap())
-        );
-        pnObraLayout.setVerticalGroup(
-            pnObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnObraLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(spObra, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btRemover)
-                .addContainerGap(32, Short.MAX_VALUE))
-        );
-
-        lbNome.setText("Nome:");
-        lbNome.setToolTipText("");
-        lbNome.setName("lbnome"); // NOI18N
-
-        lbDescricao.setText("Descrição:");
-        lbDescricao.setToolTipText("");
-        lbDescricao.setName("lbdescricao"); // NOI18N
-
-        lbTitulo.setText("Título:");
-        lbTitulo.setToolTipText("");
-        lbTitulo.setName("lb_titulo"); // NOI18N
-
-        lbAnoLancamento.setText("Ano de lançamento:");
-        lbAnoLancamento.setName("lbanolancamento"); // NOI18N
-
-        lbCategoria.setText("Categoria:");
-        lbCategoria.setName("lbCategoria"); // NOI18N
-
-        txtNome.setName("txtnome"); // NOI18N
-
-        txtDescricao.setName("txtDescricao");
-
-        txtTitulo.setName("txttitulo"); // NOI18N
-
-        txtAnoLanca.setName("txtano"); // NOI18N
-
-        cbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbCategoria.addActionListener(new java.awt.event.ActionListener() {
+        btRemover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbCategoriaActionPerformed(evt);
+                btRemoverActionPerformed(evt);
             }
         });
-
-        btIncluir.setText("Incluir");
-        btIncluir.setName("btsalvar"); // NOI18N
-        btIncluir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btIncluirActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout pnCadObraLayout = new javax.swing.GroupLayout(pnCadObra);
-        pnCadObra.setLayout(pnCadObraLayout);
-        pnCadObraLayout.setHorizontalGroup(
-            pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnCadObraLayout.createSequentialGroup()
-                .addGroup(pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnCadObraLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(pnCadObraLayout.createSequentialGroup()
-                                .addGroup(pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(lbNome, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(lbDescricao))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnCadObraLayout.createSequentialGroup()
-                                        .addGap(21, 21, 21)
-                                        .addComponent(lbTitulo)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtDescricao)
-                                    .addComponent(txtTitulo)
-                                    .addComponent(txtNome, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)))
-                            .addGroup(pnCadObraLayout.createSequentialGroup()
-                                .addGroup(pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbCategoria, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lbAnoLancamento, javax.swing.GroupLayout.Alignment.TRAILING))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtAnoLanca)
-                                    .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(pnCadObraLayout.createSequentialGroup()
-                        .addGap(251, 251, 251)
-                        .addComponent(btIncluir)))
-                .addContainerGap(24, Short.MAX_VALUE))
-        );
-
-        pnCadObraLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtAnoLanca, txtDescricao, txtNome, txtTitulo});
-
-        pnCadObraLayout.setVerticalGroup(
-            pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnCadObraLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbNome)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbDescricao)
-                    .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbTitulo)
-                    .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbAnoLancamento)
-                    .addComponent(txtAnoLanca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbCategoria))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btIncluir)
-                .addGap(18, 18, 18))
-        );
-
-        pnCadObraLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtAnoLanca, txtDescricao, txtNome, txtTitulo});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(pnCadObra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnObra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(35, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(spObra, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(80, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pnCadObra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(45, 45, 45)
                 .addComponent(lbTituloTela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(147, 147, 147))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(198, 198, 198)
+                .addComponent(btRemover)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(42, 42, 42)
                 .addComponent(lbTituloTela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(22, 22, 22)
                 .addComponent(pnCadObra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnObra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(spObra, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btRemover)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cbCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCategoriaActionPerformed
-        
-    }//GEN-LAST:event_cbCategoriaActionPerformed
-
     private void btIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btIncluirActionPerformed
         // TODO add your handling code here:
         VerificaCampo();
-         
+        obra.AdicionarObra(txtTitulo.getText(),
+                         Integer.parseInt((txtAnoLanca.getText())),
+                          txtCategoria.getText());
+        
+        
+   
+        Tabela(1);
     }//GEN-LAST:event_btIncluirActionPerformed
-     
+
+    private void btRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverActionPerformed
+        // TODO add your handling code here:
+        
+        Tabela(2);
+    }//GEN-LAST:event_btRemoverActionPerformed
+
+    private void Tabela(int SAU){
+        int sau = SAU;
+        
+        switch (sau) {
+            case 1:
+                DefaultTableModel Obras = (DefaultTableModel) tbObra.getModel();    
+                 String[] newrow = {txtTitulo.getText(),txtAnoLanca.getText(),txtCategoria.getText()};
+                 Obras.addRow(newrow);          
+                break;
+            case 2:
+             int result = JOptionPane.showConfirmDialog(null,"Deseja Excluir a linha ? ","Excluir",JOptionPane.YES_NO_CANCEL_OPTION); 
+             if(result == JOptionPane.YES_OPTION){               
+                int linhaSelecionada = tbObra.getSelectedRow();
+             if (linhaSelecionada != -1) { // se não estiver em  nenhuma linha então 
+                   ((DefaultTableModel) tbObra.getModel()).removeRow(linhaSelecionada);
+               }
+             }   
+            default:
+                throw new  IllegalArgumentException("Tentou né");
+        }
+    };
+        
+    
     public String VerificaCampo(){
        String VerificaCampo = " " ; 
         
-       if (txtNome.getText().equals("")  || txtDescricao.getText().equals("") || 
-          txtTitulo.getText().equals("") || txtAnoLanca.getText().equals("") ||
-          cbCategoria.getSelectedItem() == null ||cbCategoria.getSelectedItem().equals(" ") ){
+       if (txtTitulo.getText().equals("") || txtAnoLanca.getText().equals("") ||
+          txtCategoria.getText().equals(" ") ){
            
          VerificaCampo = "Campos que precisam ser preenchidos:";
-         
-         if(txtNome.getText().equals("")){
-             VerificaCampo +=  "\nCampo nome está vazio.";               
-         }
-         if(txtDescricao.getText().equals("")){
-             VerificaCampo += "\nCampo descrição está vazio.";               
-         }
+        
          if(txtTitulo.getText().equals("")){
              VerificaCampo += "\nCampo título detalhada está vazio.";               
          }
           if(txtAnoLanca.getText().equals("")){
              VerificaCampo += "\nCampo ano de lançamento está vazio.";               
          }
-          if(cbCategoria.getSelectedItem() == null ||cbCategoria.getSelectedItem().equals(" ") ){
+          if(txtCategoria.getText().equals(" ")){
                VerificaCampo += "\nCampo categoria está vazio.";         
           }
                     
@@ -321,20 +293,15 @@ public class Cad_Obra extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btIncluir;
     private javax.swing.JButton btRemover;
-    private javax.swing.JComboBox<String> cbCategoria;
     private javax.swing.JLabel lbAnoLancamento;
     private javax.swing.JLabel lbCategoria;
-    private javax.swing.JLabel lbDescricao;
-    private javax.swing.JLabel lbNome;
     private javax.swing.JLabel lbTitulo;
     private java.awt.Label lbTituloTela;
     private java.awt.Panel pnCadObra;
-    private javax.swing.JPanel pnObra;
     private javax.swing.JScrollPane spObra;
     private javax.swing.JTable tbObra;
     private javax.swing.JTextField txtAnoLanca;
-    private javax.swing.JTextField txtDescricao;
-    private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtCategoria;
     private javax.swing.JTextField txtTitulo;
     // End of variables declaration//GEN-END:variables
 }

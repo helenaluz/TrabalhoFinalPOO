@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import model.Categoria;
 import model.Obra;
 
 /**
@@ -27,7 +26,7 @@ public class ObraController {
     
     ArrayList<Obra> obras = new ArrayList<>();
 
-     public void AdicionarObra(String titulo, int ano, Categoria categoria){
+     public void AdicionarObra(String titulo, int ano, String categoria){
         try{
             model.Obra obra = new model.Obra(titulo, ano, categoria);
             if(this.obras.stream().anyMatch(x -> x.getTitulo().equals(titulo))) throw new IllegalArgumentException("Obra com o mesmo titulo já existe na coleção!");

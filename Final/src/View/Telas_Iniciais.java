@@ -33,7 +33,7 @@ public class Telas_Iniciais extends javax.swing.JFrame {
         btObra = new javax.swing.JMenuItem();
         btPersonagem = new javax.swing.JMenuItem();
         btTermo = new javax.swing.JMenuItem();
-        jMenu9 = new javax.swing.JMenu();
+        btPesquisa = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -90,6 +90,11 @@ public class Telas_Iniciais extends javax.swing.JFrame {
                 btPersonagemMouseClicked(evt);
             }
         });
+        btPersonagem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btPersonagemActionPerformed(evt);
+            }
+        });
         mn_cadastros.add(btPersonagem);
 
         btTermo.setText("Termo");
@@ -100,14 +105,24 @@ public class Telas_Iniciais extends javax.swing.JFrame {
                 btTermoMouseClicked(evt);
             }
         });
+        btTermo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btTermoActionPerformed(evt);
+            }
+        });
         mn_cadastros.add(btTermo);
 
         Barra_Opcoes.add(mn_cadastros);
 
-        jMenu9.setText("Pesquisa Avançada");
-        jMenu9.setToolTipText("");
-        jMenu9.setName("bt_Pesquisa"); // NOI18N
-        Barra_Opcoes.add(jMenu9);
+        btPesquisa.setText("Pesquisa Avançada");
+        btPesquisa.setToolTipText("");
+        btPesquisa.setName("bt_Pesquisa"); // NOI18N
+        btPesquisa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btPesquisaActionPerformed(evt);
+            }
+        });
+        Barra_Opcoes.add(btPesquisa);
 
         setJMenuBar(Barra_Opcoes);
 
@@ -161,6 +176,24 @@ public class Telas_Iniciais extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_pnPrincipalHierarchyChanged
 
+    private void btPersonagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPersonagemActionPerformed
+        // TODO add your handling code here:
+         Cad_Personagem personagem = new Cad_Personagem(); 
+        personagem.setVisible(true);
+    }//GEN-LAST:event_btPersonagemActionPerformed
+
+    private void btTermoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btTermoActionPerformed
+        // TODO add your handling code here:
+       Cad_Termo termo = new Cad_Termo(); 
+       termo.setVisible(true);
+    }//GEN-LAST:event_btTermoActionPerformed
+
+    private void btPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisaActionPerformed
+        // TODO add your handling code here:
+       Consulta_Pesquisa pesquisateste = new Consulta_Pesquisa(); 
+       pesquisateste.setVisible(true);
+    }//GEN-LAST:event_btPesquisaActionPerformed
+
     
   
     public static void main(String args[]) {
@@ -177,8 +210,8 @@ public class Telas_Iniciais extends javax.swing.JFrame {
     private javax.swing.JMenuItem btLocal;
     private javax.swing.JMenuItem btObra;
     private javax.swing.JMenuItem btPersonagem;
+    private javax.swing.JMenu btPesquisa;
     private javax.swing.JMenuItem btTermo;
-    private javax.swing.JMenu jMenu9;
     private javax.swing.JMenu mn_cadastros;
     private javax.swing.JPanel pnPrincipal;
     // End of variables declaration//GEN-END:variables
