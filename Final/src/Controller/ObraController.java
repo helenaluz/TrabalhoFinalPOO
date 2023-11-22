@@ -28,7 +28,6 @@ public class ObraController {
     
     ArrayList<Obra> obras = new ArrayList<>();
 
-
     /**
      * Adiciona um obra ao arquivo
      * 
