@@ -24,13 +24,20 @@ import model.Termo;
 public class TermoController {
 
     public TermoController() {
-        carregarObrasDoArquivo();
+        carregarTermosDoArquivo();
     }
     
     ArrayList<Termo> termos = new ArrayList<>();
     ObraController obraController = new ObraController();
     
-     public void AdicionarTermo(String nome, String descricao, Obra obra) {
+    /**
+     * Adiciona um termo ao arquivo
+     * 
+     * @param nome nome do termo
+     * @param descricao descricao do termo
+     * @param obra obra relacionada ao termo
+     */
+    public void AdicionarTermo(String nome, String descricao, Obra obra) {
        try{
            Termo termo = new Termo(nome, descricao, obra);
             if (this.termos.stream().anyMatch(x -> x.getNome().equals(termo.getNome()))) throw new IllegalArgumentException("Termo com o mesmo nome já existe na coleção!");
@@ -43,6 +50,11 @@ public class TermoController {
         }
     }
     
+    /**
+     * Remove um termo
+     * 
+     * @param termo termo que deseja ser removido
+     */
     public void RemoverTermo(Termo termo){
         try{
             if(!this.termos.stream().anyMatch(x -> x == termo)) throw new IllegalArgumentException("Termo não existe na coleção");
@@ -54,6 +66,12 @@ public class TermoController {
         }
     }
     
+    /**
+     * Procura um termo por seu nome
+     * 
+     * @param nome nome do termo que deseja ser buscado
+     * @return Termo encontrado
+     */
     public Termo VerTermosPorNome(String nome){
         
         try{
@@ -65,6 +83,10 @@ public class TermoController {
         return null;
     }
     
+    /**
+     * Retorna todos os termos do arquivo
+     * @return todos os termos do arquivo
+     */
     public ArrayList<Termo> PegarTodosTermos(){
         try{
             if(this.termos == null || this.termos.size() == 0) throw new IllegalArgumentException("Não há termos cadastradas no sistema!");
@@ -76,7 +98,17 @@ public class TermoController {
         return null;
     }
     
-     public void AdicionarPersonagem(String nome, String descricao, Obra obra, String caracteristicas, String ator, String feitos){
+    /**
+     *Adiciona um personagem no arquivo
+     * 
+     * @param nome nome do personagem
+     * @param descricao descricao do personagem
+     * @param obra obra relacionada ao personagem
+     * @param caracteristicas caracteristica do personagem
+     * @param ator ator(es) que faz o personagem
+     * @param feitos feitos desse personagem
+     */
+    public void AdicionarPersonagem(String nome, String descricao, Obra obra, String caracteristicas, String ator, String feitos){
         try{
             Personagem personagem = new Personagem(nome, descricao, obra, caracteristicas, ator, feitos);
             if(this.termos.stream().anyMatch(x -> x.getNome().equals(nome)))  throw new IllegalArgumentException("Personagem com o mesmo nome já existe na coleção!");
@@ -88,6 +120,14 @@ public class TermoController {
         }
     }
     
+    /**
+     * Adicona um termo tipo Local no arquivo
+     * 
+     * @param nome nome do local
+     * @param descricao descricao do local
+     * @param obra obra relacionada ao local
+     * @param descricaoHistorica descricaoHistoricca do Local
+     */
     public void AdicionarLocal(String nome, String descricao, Obra obra, String descricaoHistorica){
         try{
             Local local = new Local(nome, descricao, obra, descricaoHistorica);
@@ -100,7 +140,10 @@ public class TermoController {
         }
     }
     
-    private void carregarObrasDoArquivo() {
+    /**
+     * Carrega todos os termos do arquivo para a lista de termos
+     */
+    private void carregarTermosDoArquivo() {
     termos.clear();
     try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("temos.dat"))) {
         while (true) {
@@ -120,6 +163,10 @@ public class TermoController {
     
     
 }
+
+    /**
+     * Atualiza o arquivo, sobre escreve o que esta no arquivo com o que esta na lista
+     */
     private void atualizarArquivo() {
     try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("temos.dat"))) {
         for (Termo termoExistente: this.termos) {
