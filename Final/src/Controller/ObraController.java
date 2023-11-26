@@ -4,10 +4,14 @@
  */
 package Controller;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -21,13 +25,14 @@ import model.Obra;
  * @author Samsung
  */
 public class ObraController {
-
+    
+    private static final String FILE_PATH = "obras.csv";
+    public ArrayList<Obra> obras = new ArrayList<>();
+    
     public ObraController() {
         this.carregarObrasDoArquivo();
     }
     
-    public ArrayList<Obra> obras = new ArrayList<>();
-
     /**
      * Adiciona um obra ao arquivo
      * 
@@ -35,21 +40,13 @@ public class ObraController {
      * @param ano ano da obra
      * @param categoria categoria da obra
      */
-    public void AdicionarObra(String titulo, int ano, String categoria){
-        try{
+    public void AdicionarObra(String titulo, String ano, String categoria){
+      
             model.Obra obra = new model.Obra(titulo, ano, categoria);
             if(this.obras.stream().anyMatch(x -> x.getTitulo().equals(titulo))) throw new IllegalArgumentException("Obra com o mesmo titulo já existe na coleção!");
             this.obras.add(obra);
-            try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("obras.dat"))) {
-                outputStream.writeObject(obra);
-            } 
-            catch (Exception e) {
-                System.err.println(e.getMessage());
-            }
-        }
-        catch(IllegalArgumentException e){
-            System.err.println(e.getMessage());
-        }
+            atualizarArquivo();
+      
     }
     
     /**
@@ -103,37 +100,38 @@ public class ObraController {
     /**
      * Carregar obras do arquivo para uma lista
      */
+   
     private void carregarObrasDoArquivo() {
-    obras.clear();
-    try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("obras.dat"))) {
-        while (true) {
-            try {
-                Obra obra = (Obra) inputStream.readObject();
+        obras.clear();
+        try (BufferedReader br = new BufferedReader(new FileReader(FILE_PATH))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                String titulo = values[0];
+                String categoria = values[2];
+                String anoLancamentoStr = values[1];
+                Obra obra = new Obra(titulo, anoLancamentoStr,categoria);
                 obras.add(obra);
-            } catch (EOFException e) {
-                System.err.println(e.getMessage());
-                break;
             }
+        } catch (FileNotFoundException e) {
+            System.err.println(e.getMessage());
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
         }
-    } catch (FileNotFoundException e) {
-        System.err.println(e.getMessage());
-    } catch (IOException | ClassNotFoundException e) {
-        System.err.println(e.getMessage());
     }
-    
-    
-}
-    /**
-     * Atualiza o arquivo, sobre escreve o que esta no arquivo com o que esta na lista
-     */
+
     private void atualizarArquivo() {
-    try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("obras.dat"))) {
-        for (Obra obraExistente : this.obras) {
-            outputStream.writeObject(obraExistente);
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_PATH))) {
+            for (Obra obra : this.obras) {
+                String line = obra.getTitulo() + "," + obra.getCategoria() + "," + obra.getAnoLancamento();
+                bw.write(line);
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
         }
-    } catch (Exception e) {
-        System.err.println(e.getMessage());
     }
+    
 }
-}
+
 

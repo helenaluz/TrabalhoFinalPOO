@@ -6,10 +6,10 @@ import java.util.Objects;
 public class Obra implements Serializable {
 
     private String titulo;
-    private int anoLancamento;
+    private String anoLancamento;
     private String categoria;
 
-    public Obra(String titulo, int anoLancamento, String categoria) {
+    public Obra(String titulo, String anoLancamento, String categoria) {
         setAnoLancamento(anoLancamento);
         setTitulo(titulo);
         setCategoria(categoria);
@@ -29,12 +29,12 @@ public class Obra implements Serializable {
         this.titulo = titulo;
     }
 
-    public int getAnoLancamento() {
+    public String getAnoLancamento() {
         return anoLancamento;
     }
 
-    public void setAnoLancamento(int anoLancamento) {
-        if (anoLancamento == 0) {
+    public void setAnoLancamento(String anoLancamento) {
+        if (anoLancamento.equals("0")) {
             throw new IllegalArgumentException("O ano de lançamento não pode ser zero!");
         }
         this.anoLancamento = anoLancamento;

@@ -16,7 +16,7 @@ import model.Termo;
  */
 public class TermoController {
 
-    private static final String FILE_PATH = "temos.dat";
+    private static final String FILE_PATH = "termos.csv";
     public ArrayList<Termo> termos = new ArrayList<>();
     public ObraController obraController = new ObraController();
 
@@ -74,7 +74,7 @@ public class TermoController {
             if (termos.isEmpty()) {
                 throw new IllegalArgumentException("Não há termos cadastradas no sistema!");
             }
-            return new ArrayList<>(termos); // Return a copy of the list to avoid external modifications
+            return new ArrayList<>(termos); 
         } catch (IllegalArgumentException e) {
             System.err.println(e.getMessage());
             return new ArrayList<>();
@@ -113,20 +113,33 @@ public class TermoController {
 
     private void carregarTermosDoArquivo() {
         termos.clear();
-        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(FILE_PATH))) {
-            termos.addAll((ArrayList<Termo>) inputStream.readObject());
+        try (BufferedReader br = new BufferedReader(new FileReader(FILE_PATH))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                String nome = values[0];
+                String descricao = values[1];
+                String obraTitulo = values[2];
+                Obra obra = obraController.VerObraPorTitulo(obraTitulo);
+                Termo termo = new Termo(nome, descricao, obra); 
+                termos.add(termo);
+            }
         } catch (FileNotFoundException e) {
             System.err.println(e.getMessage());
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException e) {
             System.err.println(e.getMessage());
         }
     }
 
     private void atualizarArquivo() {
-        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(FILE_PATH))) {
-            outputStream.writeObject(termos);
-        } catch (Exception e) {
-            System.err.println(e.getMessage()+"oi");
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_PATH))) {
+            for (Termo termo : this.termos) {
+                String line = termo.getNome() + "," + termo.getDescricao() + "," + termo.getObras().get(0).getTitulo(); 
+                bw.write(line);
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
         }
     }
 }
