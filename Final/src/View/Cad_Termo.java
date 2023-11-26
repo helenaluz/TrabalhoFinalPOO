@@ -4,8 +4,11 @@
  */
 package View;
 
+import Controller.TermoController;
 import javax.swing.JOptionPane;
-import model.Termo;
+import Controller.TermoController;
+import javax.swing.table.DefaultTableModel;
+import model.Obra;
 
 /**
  *
@@ -19,7 +22,9 @@ public class Cad_Termo extends javax.swing.JFrame {
     public Cad_Termo() {
         initComponents();
     }
-
+    
+      
+      TermoController termo = new TermoController(); 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,15 +36,15 @@ public class Cad_Termo extends javax.swing.JFrame {
 
         btRemover = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbTermo = new javax.swing.JTable();
         pnCadTermo = new java.awt.Panel();
         lbNome = new javax.swing.JLabel();
         lbDescricao = new javax.swing.JLabel();
         lbObra = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
         txtDescricao = new javax.swing.JTextField();
-        txtObra = new javax.swing.JTextField();
         btSalvar = new javax.swing.JButton();
+        cbObra = new javax.swing.JComboBox<>();
         lbTituloTela = new java.awt.Label();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -47,8 +52,13 @@ public class Cad_Termo extends javax.swing.JFrame {
 
         btRemover.setText("Remover");
         btRemover.setName("btRemover"); // NOI18N
+        btRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btRemoverActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbTermo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -67,7 +77,7 @@ public class Cad_Termo extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbTermo);
 
         lbNome.setText("Nome:");
         lbNome.setToolTipText("");
@@ -85,8 +95,6 @@ public class Cad_Termo extends javax.swing.JFrame {
 
         txtDescricao.setName("txtnome"); // NOI18N
 
-        txtObra.setName("txtObra");
-
         btSalvar.setText("Incluir");
         btSalvar.setName("btSalvar");
         btSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -94,6 +102,8 @@ public class Cad_Termo extends javax.swing.JFrame {
                 btSalvarActionPerformed(evt);
             }
         });
+
+        cbObra.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout pnCadTermoLayout = new javax.swing.GroupLayout(pnCadTermo);
         pnCadTermo.setLayout(pnCadTermoLayout);
@@ -109,7 +119,7 @@ public class Cad_Termo extends javax.swing.JFrame {
                 .addGroup(pnCadTermoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtDescricao)
                     .addComponent(txtNome, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
-                    .addComponent(txtObra))
+                    .addComponent(cbObra, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(13, 13, 13))
             .addGroup(pnCadTermoLayout.createSequentialGroup()
                 .addGap(253, 253, 253)
@@ -128,10 +138,10 @@ public class Cad_Termo extends javax.swing.JFrame {
                     .addComponent(lbDescricao)
                     .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnCadTermoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtObra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbObra))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addGroup(pnCadTermoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbObra)
+                    .addComponent(cbObra, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addComponent(btSalvar)
                 .addContainerGap())
         );
@@ -163,7 +173,7 @@ public class Cad_Termo extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(25, Short.MAX_VALUE)
+                .addContainerGap(22, Short.MAX_VALUE)
                 .addComponent(lbTituloTela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23)
                 .addComponent(pnCadTermo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -180,39 +190,49 @@ public class Cad_Termo extends javax.swing.JFrame {
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
         // TODO add your handling code here:
         VerificaCampo(); 
+        termo.AdicionarTermo(txtNome.getText(),                             
+                txtDescricao.getText(), 
+               (Obra) cbObra.getSelectedItem());
         
-            /*Termo termo = new Termo();
-            termo.setNome(txtNome.getText());
-            termo.setDescricao(txtDescricao.getText());
-            
-            termo.((txtObra.getText()));*/
-            
-           /* main Mains = new main();
-            Mains.AdicionarTermo(termo.getNome(),termo. );
-                   
-            bairro.setNome(jTextFieldNomeBairro.getText());
-            bairro.setCoeficienteIptu(Double.parseDouble(jTextFieldCoeficienteBairro.getText()));
-
-            Imovel imovel = new Imovel();
-            imovel.setEndereco(jTextfieldEndereco.getText());
-            imovel.setArea(Integer.parseInt(jTextFieldArea.getText()));
-            imovel.setBairro(bairro);
-
-            if(jRadioButtonComercial.isSelected()) {
-                imovel.setFinalidade(Finalidade.COMERCIAL);
-            } else if (jRadioButtonResidencial.isSelected()) {
-                imovel.setFinalidade(Finalidade.RESIDENCIAL);
-            } else if (jRadioButtonIndustrial.isSelected()) {
-               imovel.setFinalidade(Finalidade.INDUSTRIAL);
-            }*/
+        Tabela(1);
         
     }//GEN-LAST:event_btSalvarActionPerformed
 
+    private void btRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverActionPerformed
+        // TODO add your handling code here:
+        Tabela(2);
+    }//GEN-LAST:event_btRemoverActionPerformed
+   
+     private void Tabela(int SAU){
+        int sau = SAU;
+        
+        switch (sau) {
+            case 1:
+                 DefaultTableModel Termo = (DefaultTableModel) tbTermo.getModel();    
+                  String[] newrow = {txtNome.getText(),                             
+                txtDescricao.getText(), 
+                (String) cbObra.getSelectedItem()};
+                Termo.addRow(newrow);   
+                break;
+            case 2:
+             int result = JOptionPane.showConfirmDialog(null,"Deseja Excluir a linha ? ","Excluir",JOptionPane.YES_NO_CANCEL_OPTION); 
+             if(result == JOptionPane.YES_OPTION){               
+                int linhaSelecionada = tbTermo.getSelectedRow();
+             if (linhaSelecionada != -1) { // se não estiver em  nenhuma linha então 
+                   ((DefaultTableModel) tbTermo.getModel()).removeRow(linhaSelecionada);
+            }
+            }   
+            default:
+                throw new  IllegalArgumentException("Tentou né");
+        }
+    };
+    
+    
     private String VerificaCampo(){
        String VerificaCampo = " "; 
            
        if (txtNome.getText().equals("") || txtDescricao.getText().equals("") || 
-          txtObra.getText().equals("")){
+          cbObra.getSelectedItem().equals("")){
            
          VerificaCampo = "Campos que precisam ser preenchidos:";
          
@@ -222,7 +242,7 @@ public class Cad_Termo extends javax.swing.JFrame {
          if(txtDescricao.getText().equals("")){
              VerificaCampo += "\nCampo descrição está vazio.";               
          }
-         if(txtObra.getText().equals("")){
+         if(cbObra.getSelectedItem().equals("")){
              VerificaCampo += "\nCampo obra está vazio.";               
          }
          
@@ -269,15 +289,15 @@ public class Cad_Termo extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btRemover;
     private javax.swing.JButton btSalvar;
+    private javax.swing.JComboBox<String> cbObra;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lbDescricao;
     private javax.swing.JLabel lbNome;
     private javax.swing.JLabel lbObra;
     private java.awt.Label lbTituloTela;
     private java.awt.Panel pnCadTermo;
+    private javax.swing.JTable tbTermo;
     private javax.swing.JTextField txtDescricao;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JTextField txtObra;
     // End of variables declaration//GEN-END:variables
 }

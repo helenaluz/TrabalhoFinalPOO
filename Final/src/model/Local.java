@@ -18,6 +18,11 @@ public class Local extends Termo implements Serializable {
         super(nome, descricao, obra);
         setDescricaoHistoria(descricaoHistorica);
     }
+
+    public Local() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
     
     public String getDescricaoHistoria() {
         return descricaoHistoria;

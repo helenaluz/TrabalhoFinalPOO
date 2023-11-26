@@ -4,7 +4,9 @@
  */
 package model;
 
+
 import java.util.ArrayList;
+import View.Telas_Iniciais;
 
 /**
  *
@@ -15,7 +17,8 @@ public class main {
   
     
     public static void main(String[] args) {
-        
+        Telas_Iniciais inicial = new Telas_Iniciais(); 
+        inicial.setVisible(true);
         
      
     }
