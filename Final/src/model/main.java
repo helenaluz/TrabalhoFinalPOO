@@ -5,7 +5,9 @@
 package model;
 
 
+import Controller.LocalController;
 import Controller.ObraController;
+import Controller.PersonagemController;
 import Controller.TermoController;
 import java.util.ArrayList;
 import View.Telas_Iniciais;
@@ -22,17 +24,15 @@ public class main {
        // Telas_Iniciais inicial = new Telas_Iniciais(); 
        // inicial.setVisible(true);
         ObraController obra = new ObraController();
-      ArrayList<Obra> oi = obra.PegarTodasObras();
-      
-        TermoController termo = new TermoController();
-        termo.AdicionarTermo("retuyyuk", "bla", oi.get(0));
-        Termo excluir = termo.VerTermosPorNome("Bla");
-        termo.RemoverTermo(excluir);
-        ArrayList<Termo> termos = termo.PegarTodosTermos();
-        
-        for(int i = 0; i < termos.size(); i++){
-            System.out.println(termos.get(i).getNome());
+        ArrayList<Obra> oi = obra.PegarTodasObras();
+        PersonagemController personagem = new PersonagemController();
+        personagem.Adicionarpersonagem("ola", "sdf", oi.get(1), "sedrf", "dtgh", "ewf");
+        personagem.Removerpersonagem("pito");
+        ArrayList<Personagem> ola = personagem.PegarTodospersonagens();
+        for(int i =0; i < ola.size(); i++){
+            System.out.println(ola.get(i).getNome());
         }
+      
     }
     
     

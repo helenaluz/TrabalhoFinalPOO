@@ -45,7 +45,8 @@ public class TermoController {
         }
     }
 
-    public void RemoverTermo(Termo termo) {
+    public void RemoverTermo(String nome) {
+        Termo termo = this.VerTermosPorNome(nome);
         try {
             if (!termos.contains(termo)) {
                 throw new IllegalArgumentException("Termo não existe na coleção");

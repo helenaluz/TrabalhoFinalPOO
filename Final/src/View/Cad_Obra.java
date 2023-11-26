@@ -192,7 +192,7 @@ public class Cad_Obra extends javax.swing.JFrame {
         // TODO add your handling code here:
         VerificaCampo();
         obra.AdicionarObra(txtTitulo.getText(),
-                         Integer.parseInt((txtAnoLanca.getText())),
+                         txtAnoLanca.getText(),
                           txtCategoria.getText());
         
         

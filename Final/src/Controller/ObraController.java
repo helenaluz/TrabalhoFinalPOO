@@ -55,7 +55,8 @@ public class ObraController {
      * 
      * @param obra passa um tipo obra para remover essa obra expecifica
      */
-    public void RemoverObra(model.Obra obra){
+    public void RemoverObra(String titulo){
+        Obra obra = this.VerObraPorTitulo(titulo);
         try{
             if(!this.obras.stream().anyMatch(x -> x == obra)) throw new IllegalArgumentException("Obra não existe na coleção!");
             this.obras.remove(obra);
