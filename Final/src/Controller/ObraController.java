@@ -26,7 +26,7 @@ public class ObraController {
         this.carregarObrasDoArquivo();
     }
     
-    ArrayList<Obra> obras = new ArrayList<>();
+    public ArrayList<Obra> obras = new ArrayList<>();
 
     /**
      * Adiciona um obra ao arquivo
