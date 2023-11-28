@@ -4,11 +4,17 @@
  */
 package View;
 
+import Controller.ObraController;
 import Controller.TermoController;
 import javax.swing.JOptionPane;
 import Controller.TermoController;
 import javax.swing.table.DefaultTableModel;
 import model.Obra;
+import model.Termo;
+import java.util.ArrayList;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import model.Tabelas.TermoTableModel;
 
 /**
  *
@@ -21,10 +27,15 @@ public class Cad_Termo extends javax.swing.JFrame {
      */
     public Cad_Termo() {
         initComponents();
+        PreencheCombo();
+        Tabela(3);
     }
-    
-      
-      TermoController termo = new TermoController(); 
+
+    TermoController termoController = new TermoController();
+    ArrayList<Termo> termo = termoController.PegarTodosTermos();
+    ObraController obraController = new ObraController();
+    ArrayList<Obra> obra = obraController.PegarTodasObras();
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -34,29 +45,39 @@ public class Cad_Termo extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btRemover = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tbTermo = new javax.swing.JTable();
         pnCadTermo = new java.awt.Panel();
         lbNome = new javax.swing.JLabel();
         lbDescricao = new javax.swing.JLabel();
         lbObra = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
         txtDescricao = new javax.swing.JTextField();
-        btSalvar = new javax.swing.JButton();
         cbObra = new javax.swing.JComboBox<>();
+        spTermo = new javax.swing.JScrollPane();
+        tbTermo = new javax.swing.JTable();
+        btSalvar = new javax.swing.JButton();
+        btRemover = new javax.swing.JButton();
         lbTituloTela = new java.awt.Label();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName("jfTermo"); // NOI18N
 
-        btRemover.setText("Remover");
-        btRemover.setName("btRemover"); // NOI18N
-        btRemover.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btRemoverActionPerformed(evt);
-            }
-        });
+        lbNome.setText("Nome:");
+        lbNome.setToolTipText("");
+        lbNome.setName("lbnome"); // NOI18N
+
+        lbDescricao.setText("Descrição:");
+        lbDescricao.setToolTipText("");
+        lbDescricao.setName("lbDescricao");
+
+        lbObra.setText("Obra:");
+        lbObra.setToolTipText("");
+        lbObra.setName("lbobra"); // NOI18N
+
+        txtNome.setName("txtNome");
+
+        txtDescricao.setName("txtnome"); // NOI18N
+
+        cbObra.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         tbTermo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -77,23 +98,7 @@ public class Cad_Termo extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tbTermo);
-
-        lbNome.setText("Nome:");
-        lbNome.setToolTipText("");
-        lbNome.setName("lbnome"); // NOI18N
-
-        lbDescricao.setText("Descrição:");
-        lbDescricao.setToolTipText("");
-        lbDescricao.setName("lbDescricao");
-
-        lbObra.setText("Obra:");
-        lbObra.setToolTipText("");
-        lbObra.setName("lbobra"); // NOI18N
-
-        txtNome.setName("txtNome");
-
-        txtDescricao.setName("txtnome"); // NOI18N
+        spTermo.setViewportView(tbTermo);
 
         btSalvar.setText("Incluir");
         btSalvar.setName("btSalvar");
@@ -103,7 +108,13 @@ public class Cad_Termo extends javax.swing.JFrame {
             }
         });
 
-        cbObra.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        btRemover.setText("Remover");
+        btRemover.setName("btRemover"); // NOI18N
+        btRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btRemoverActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnCadTermoLayout = new javax.swing.GroupLayout(pnCadTermo);
         pnCadTermo.setLayout(pnCadTermoLayout);
@@ -112,19 +123,26 @@ public class Cad_Termo extends javax.swing.JFrame {
             .addGroup(pnCadTermoLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnCadTermoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbNome, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbDescricao, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lbObra, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnCadTermoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtDescricao)
-                    .addComponent(txtNome, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
-                    .addComponent(cbObra, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(13, 13, 13))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnCadTermoLayout.createSequentialGroup()
+                        .addGroup(pnCadTermoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbNome, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbDescricao, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lbObra, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnCadTermoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtDescricao)
+                            .addComponent(txtNome, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
+                            .addComponent(cbObra, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(13, 13, 13))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnCadTermoLayout.createSequentialGroup()
+                        .addComponent(spTermo, javax.swing.GroupLayout.PREFERRED_SIZE, 644, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
             .addGroup(pnCadTermoLayout.createSequentialGroup()
-                .addGap(253, 253, 253)
+                .addGap(196, 196, 196)
                 .addComponent(btSalvar)
-                .addContainerGap(268, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btRemover)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         pnCadTermoLayout.setVerticalGroup(
             pnCadTermoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -141,9 +159,13 @@ public class Cad_Termo extends javax.swing.JFrame {
                 .addGroup(pnCadTermoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbObra)
                     .addComponent(cbObra, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-                .addComponent(btSalvar)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(spTermo, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnCadTermoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btSalvar)
+                    .addComponent(btRemover))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         lbTituloTela.setFont(new java.awt.Font("Microsoft JhengHei", 1, 48)); // NOI18N
@@ -156,32 +178,21 @@ public class Cad_Termo extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(270, 270, 270)
-                                .addComponent(btRemover))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 644, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(23, 23, 23)
-                                .addComponent(pnCadTermo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(58, 58, 58)
+                        .addComponent(pnCadTermo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(142, 142, 142)
                         .addComponent(lbTituloTela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbTituloTela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23)
                 .addComponent(pnCadTermo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btRemover)
-                .addContainerGap())
+                .addGap(464, 464, 464))
         );
 
         pack();
@@ -189,68 +200,114 @@ public class Cad_Termo extends javax.swing.JFrame {
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
         // TODO add your handling code here:
-        VerificaCampo(); 
-        termo.AdicionarTermo(txtNome.getText(),                             
-                txtDescricao.getText(), 
-               (Obra) cbObra.getSelectedItem());
-        
-        Tabela(1);
-        
+        try {
+            VerificaCampo();
+            Acoes(1);
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(null, "Ocorreu uma exceção:\n" + e.toString(), "Exceção", JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverActionPerformed
         // TODO add your handling code here:
-        Tabela(2);
+        try {
+            Acoes(2);
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(null, "Ocorreu uma exceção:\n" + e.toString(), "Exceção", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btRemoverActionPerformed
-   
-     private void Tabela(int SAU){
-        int sau = SAU;
-        
-        switch (sau) {
+
+    private void Tabela(int Crud) {
+        DefaultTableModel Termo = (DefaultTableModel) tbTermo.getModel();
+        Termo.setColumnIdentifiers(new Object[]{"Nome", "Descricao", "Obra"});
+        switch (Crud) {
             case 1:
-                 DefaultTableModel Termo = (DefaultTableModel) tbTermo.getModel();    
-                  String[] newrow = {txtNome.getText(),                             
-                txtDescricao.getText(), 
-                (String) cbObra.getSelectedItem()};
-                Termo.addRow(newrow);   
+                Object[] newrow = {txtNome.getText(), txtDescricao.getText(), (String) cbObra.getSelectedItem()};
+                Termo.addRow(newrow);
                 break;
             case 2:
-             int result = JOptionPane.showConfirmDialog(null,"Deseja Excluir a linha ? ","Excluir",JOptionPane.YES_NO_CANCEL_OPTION); 
-             if(result == JOptionPane.YES_OPTION){               
-                int linhaSelecionada = tbTermo.getSelectedRow();
-             if (linhaSelecionada != -1) { // se não estiver em  nenhuma linha então 
-                   ((DefaultTableModel) tbTermo.getModel()).removeRow(linhaSelecionada);
-            }
-            }   
+                int result = JOptionPane.showConfirmDialog(null, "Deseja Excluir a linha ? ", "Excluir", JOptionPane.YES_NO_CANCEL_OPTION);
+                if (result == JOptionPane.YES_OPTION) {
+                    int linhaSelecionada = tbTermo.getSelectedRow();
+                    if (linhaSelecionada != -1) { // se não estiver em  nenhuma linha então 
+                        ((DefaultTableModel) tbTermo.getModel()).removeRow(linhaSelecionada);
+                    }
+                }
+                break;
+            case 3:
+                for (Termo dado : termo) {
+                    Termo.addRow(new Object[]{dado.getDescricao(), dado.getNome(), dado.getObras()});
+                }
+                tbTermo = new JTable(new TermoTableModel(termo));
+                spTermo = new JScrollPane(tbTermo);
+                getContentPane().add(spTermo);
+
+                break;
             default:
-                throw new  IllegalArgumentException("Tentou né");
+                throw new IllegalArgumentException("Tentou né");
         }
-    };
-    
-    
-    private String VerificaCampo(){
-       String VerificaCampo = " "; 
-           
-       if (txtNome.getText().equals("") || txtDescricao.getText().equals("") || 
-          cbObra.getSelectedItem().equals("")){
-           
-         VerificaCampo = "Campos que precisam ser preenchidos:";
-         
-         if(txtNome.getText().equals("")){
-             VerificaCampo +=  "\nCampo nome está vazio.";               
-         }
-         if(txtDescricao.getText().equals("")){
-             VerificaCampo += "\nCampo descrição está vazio.";               
-         }
-         if(cbObra.getSelectedItem().equals("")){
-             VerificaCampo += "\nCampo obra está vazio.";               
-         }
-         
-           JOptionPane.showMessageDialog(this,  VerificaCampo , "ERRO",  JOptionPane.ERROR_MESSAGE);
-       }
-               return VerificaCampo;
     }
+
+    ;
+     
+     
+    public void Acoes(int crud) {
+        switch (crud) {
+            case 1:
+                String selectedObraTitulo = (String) cbObra.getSelectedItem();
+                Obra selectedObra = obraController.VerObraPorTitulo(selectedObraTitulo);
+                termoController.AdicionarTermo(txtNome.getText(), txtDescricao.getText(), selectedObra);
+                Tabela(1);
+                break;
+            case (2):
+                int linhaselecionada = tbTermo.getSelectedRow();
+                if (linhaselecionada != -1) {
+                    String nomeTermo = (String) tbTermo.getValueAt(linhaselecionada, 0);
+                    termoController.RemoverTermo(nomeTermo);
+                    ((DefaultTableModel) tbTermo.getModel()).removeRow(linhaselecionada);
+                }
+                break;
+            default:
+                throw new AssertionError();
+        }
+
+    }
+
+    public void PreencheCombo() {
+        cbObra.removeAllItems();
+
+        for (Obra obras : obra) {
+            cbObra.addItem(obras.getTitulo());
+        }
+
+    }; 
     
+  
+    
+    private String VerificaCampo() {
+        String VerificaCampo = " ";
+
+        if (txtNome.getText().equals("") || txtDescricao.getText().equals("")
+                || cbObra.getSelectedItem().equals("")) {
+
+            VerificaCampo = "Campos que precisam ser preenchidos:";
+
+            if (txtNome.getText().equals("")) {
+                VerificaCampo += "\nCampo nome está vazio.";
+            }
+            if (txtDescricao.getText().equals("")) {
+                VerificaCampo += "\nCampo descrição está vazio.";
+            }
+            if (cbObra.getSelectedItem().equals("")) {
+                VerificaCampo += "\nCampo obra está vazio.";
+            }
+
+            JOptionPane.showMessageDialog(this, VerificaCampo, "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+        return VerificaCampo;
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -281,6 +338,13 @@ public class Cad_Termo extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                Cad_Termo cadtermo = new Cad_Termo();
+
+                if (cadtermo.obra != null && !cadtermo.obra.isEmpty()) {
+                    new Cad_Termo().setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Não há pobras cadastradas no sistema ", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
                 new Cad_Termo().setVisible(true);
             }
         });
@@ -290,12 +354,12 @@ public class Cad_Termo extends javax.swing.JFrame {
     private javax.swing.JButton btRemover;
     private javax.swing.JButton btSalvar;
     private javax.swing.JComboBox<String> cbObra;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbDescricao;
     private javax.swing.JLabel lbNome;
     private javax.swing.JLabel lbObra;
     private java.awt.Label lbTituloTela;
     private java.awt.Panel pnCadTermo;
+    private javax.swing.JScrollPane spTermo;
     private javax.swing.JTable tbTermo;
     private javax.swing.JTextField txtDescricao;
     private javax.swing.JTextField txtNome;

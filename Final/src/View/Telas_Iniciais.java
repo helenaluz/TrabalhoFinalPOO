@@ -34,6 +34,7 @@ public class Telas_Iniciais extends javax.swing.JFrame {
         btPersonagem = new javax.swing.JMenuItem();
         btTermo = new javax.swing.JMenuItem();
         btPesquisa = new javax.swing.JMenu();
+        mnConsulta = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -117,11 +118,15 @@ public class Telas_Iniciais extends javax.swing.JFrame {
         btPesquisa.setText("Pesquisa Avançada");
         btPesquisa.setToolTipText("");
         btPesquisa.setName("bt_Pesquisa"); // NOI18N
-        btPesquisa.addActionListener(new java.awt.event.ActionListener() {
+
+        mnConsulta.setText("Consulta");
+        mnConsulta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btPesquisaActionPerformed(evt);
+                mnConsultaActionPerformed(evt);
             }
         });
+        btPesquisa.add(mnConsulta);
+
         Barra_Opcoes.add(btPesquisa);
 
         setJMenuBar(Barra_Opcoes);
@@ -188,11 +193,11 @@ public class Telas_Iniciais extends javax.swing.JFrame {
        termo.setVisible(true);
     }//GEN-LAST:event_btTermoActionPerformed
 
-    private void btPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisaActionPerformed
+    private void mnConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnConsultaActionPerformed
         // TODO add your handling code here:
-       Consulta_Pesquisa pesquisateste = new Consulta_Pesquisa(); 
-       pesquisateste.setVisible(true);
-    }//GEN-LAST:event_btPesquisaActionPerformed
+      Consulta_Pesquisa consulta = new Consulta_Pesquisa(); 
+      consulta.setVisible(true);
+    }//GEN-LAST:event_mnConsultaActionPerformed
 
     
   
@@ -200,6 +205,7 @@ public class Telas_Iniciais extends javax.swing.JFrame {
       
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                
                 new Telas_Iniciais().setVisible(true);
             }
         });
@@ -212,6 +218,7 @@ public class Telas_Iniciais extends javax.swing.JFrame {
     private javax.swing.JMenuItem btPersonagem;
     private javax.swing.JMenu btPesquisa;
     private javax.swing.JMenuItem btTermo;
+    private javax.swing.JMenuItem mnConsulta;
     private javax.swing.JMenu mn_cadastros;
     private javax.swing.JPanel pnPrincipal;
     // End of variables declaration//GEN-END:variables

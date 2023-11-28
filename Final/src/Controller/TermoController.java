@@ -92,6 +92,7 @@ public class TermoController {
         }
     }
 
+
     private void carregarTermosDoArquivo() {
         termos.clear();
         try (BufferedReader br = new BufferedReader(new FileReader(FILE_PATH))) {

@@ -4,12 +4,24 @@
  */
 package View;
 
+import Controller.LocalController;
+import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.*;
 import model.Local;
 import model.Obra;
-import model.Personagem; 
-import model.Termo; 
+import model.Personagem;
+import model.Termo;
+import Controller.ObraController;
+import Controller.PersonagemController;
+import Controller.TermoController;
+import static java.util.Locale.filter;
+import javax.swing.RowFilter;
+import javax.swing.RowSorter;
+import model.Tabelas.LocalTableModel;
+import javax.swing.table.TableRowSorter; 
+
+
 /**
  *
  * @author duda2
@@ -21,65 +33,143 @@ public class Consulta_Pesquisa extends javax.swing.JFrame {
      */
     public Consulta_Pesquisa() {
         initComponents();
+
     }
+
+    LocalController localController = new LocalController();
+    ArrayList<Local> localList = localController.PegarTodoslocais();
+
+    ObraController obraController = new ObraController();
+    ArrayList<Obra> obralist = obraController.PegarTodasObras();
+
+    PersonagemController personagemController = new PersonagemController();
+    ArrayList<Personagem> personagemlist = personagemController.PegarTodospersonagens();
     
-  Obra obra = new Obra();
+    TermoController termoController = new TermoController();
+    ArrayList<Termo> termolist  = termoController.PegarTodosTermos();
+
+    public void opcoesEscolhidas() {
+     
+        String termoPesquisa = txtCampoPesquisa.getText().trim().toLowerCase();
+        
+        if (rbLocal.isSelected()) {            
+            LocalEscolhido();
+            pesquisarLocal(termoPesquisa);
+        } else if (rbObra.isSelected()) {
+            ObraEscolhido();
+            pesquisarObra(termoPesquisa);
+        } else if (rbPersonagem.isSelected()) {
+            PersonagemEscolhido();
+            pesquisarPersonagem(termoPesquisa);
+        } else if (rbTermo.isSelected()) {
+            TermoEscolhido();
+            pesquisarTermo(termoPesquisa);
+        }
+
+    }
+
     
-    public void rbLocal(){   
-       Local loca = new Local();
+    
+    public void LocalEscolhido() {
+        rbLocalescolhido();
+        DefaultTableModel Local = (DefaultTableModel) tbPesquisa.getModel();
+        for (Local dado : localList) {
+            Local.addRow(new Object[]{dado.getNome(), dado.getDescricao(), dado.getDescricaoHistoria(), dado.getObras()});
+        }
+    }
+
+    public void rbLocalescolhido() {
+        Local local = new Local();
         String[] colunas = {"Nome", "Descrição", "Descrição Detalhada", "Obra"};
-        String[][] teste = {{loca.getNome(), loca.getDescricao(), loca.getDescricaoHistoria()}};    
-        DefaultTableModel Local = (new DefaultTableModel(teste, colunas){
+        String[][] data = {{local.getNome(), local.getDescricao(), local.getDescricaoHistoria()}};
+        DefaultTableModel Local = (new DefaultTableModel(data, colunas) {
             @Override
             public void addColumn(Object columnName) {
-                super.addColumn(colunas);  
-              }});
+                super.addColumn(colunas);
+            }
+        });
         tbPesquisa.setModel(Local);
-    };
+
+    } ;
     
-    public void rbObra(){
+    public void ObraEscolhido() {
+        rbObraEscolhido();
+        DefaultTableModel Obra = (DefaultTableModel) tbPesquisa.getModel();
+        for (Obra dado : obralist) {
+            Obra.addRow(new Object[]{dado.getTitulo(), dado.getAnoLancamento(), dado.getCategoria()});
+        }
+    }; 
+    
+    
+    
+    
+    public void rbObraEscolhido() {
         Obra obra = new Obra();
         String[] colunas = {"Título", "Ano de Lançamento", "Categoria"};
         String[][] data = {{obra.getTitulo(), String.valueOf(obra.getAnoLancamento()), obra.getCategoria()}};
-    
-        DefaultTableModel Obra = (new DefaultTableModel(data, colunas){
+
+        DefaultTableModel Obra = (new DefaultTableModel(data, colunas) {
             @Override
             public void addColumn(Object columnName) {
-                super.addColumn(colunas);  
-              }
+                super.addColumn(colunas);
+            }
         });
         tbPesquisa.setModel(Obra);
-    };
+    }
+
+    ;
     
+      
+    public void PersonagemEscolhido() {
+        rbPersonagem();
+        DefaultTableModel Personagem = (DefaultTableModel) tbPesquisa.getModel();
+        for (Personagem dado : personagemlist) {
+            Personagem.addRow(new Object[]{dado.getNome(), dado.getDescricao(), dado.getObras(), dado.getCaracteristicas(), dado.getAtores(), dado.getFeitos()});
+        }
+    }
+
+    ;   
     
-      public void rbPersonagem(){
+      public void rbPersonagem() {
         Personagem persona = new Personagem();
-        String[] colunas = {"Nome ", "Descrição ", "Características","Ator", "Feitos", "Obra"};
+        String[] colunas = {"Nome ", "Descrição ", "Características", "Ator", "Feitos", "Obra"};
         String[][] data = {};
-    
-        DefaultTableModel Personagem = (new DefaultTableModel(data, colunas){
+
+        DefaultTableModel Personagem = (new DefaultTableModel(data, colunas) {
             @Override
             public void addColumn(Object columnName) {
-                super.addColumn(colunas);  
-              }
+                super.addColumn(colunas);
+            }
         });
         tbPesquisa.setModel(Personagem);
-    };
-         
+    }
+
+    ;
+        
       
-    public void rbTermo(){
+    public void TermoEscolhido() {
+        rbTermo();
+        DefaultTableModel Termo = (DefaultTableModel) tbPesquisa.getModel();
+        for (Termo dado : personagemlist) {
+            Termo.addRow(new Object[]{dado.getNome(), dado.getDescricao(), dado.getObras()});
+        }
+    }
+
+    public void rbTermo() {
         Termo term = new Termo();
         String[] colunas = {"Nome ", "Descrição ", "Obra"};
         String[][] teste = {{term.getNome(), term.getDescricao()}};
-    
-        DefaultTableModel Termo = (new DefaultTableModel(teste, colunas){
+
+        DefaultTableModel Termo = (new DefaultTableModel(teste, colunas) {
             @Override
             public void addColumn(Object columnName) {
-                super.addColumn(colunas);  
-              }
+                super.addColumn(colunas);
+            }
         });
         tbPesquisa.setModel(Termo);
-    };
+    }
+
+    ;
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -88,21 +178,25 @@ public class Consulta_Pesquisa extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         label1 = new java.awt.Label();
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        spConsulta = new javax.swing.JScrollPane();
         tbPesquisa = new javax.swing.JTable();
         rbLocal = new javax.swing.JRadioButton();
         rbObra = new javax.swing.JRadioButton();
         rbPersonagem = new javax.swing.JRadioButton();
         rbTermo = new javax.swing.JRadioButton();
-        lbNome = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        lbDescricao = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtCampoPesquisa = new javax.swing.JTextField();
+        btPesquisar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
+        label1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         label1.setName("lbtitulo_pesquisa_consulta"); // NOI18N
         label1.setText("Pesquisa Avançada");
 
@@ -121,7 +215,7 @@ public class Consulta_Pesquisa extends javax.swing.JFrame {
         ));
         tbPesquisa.setColumnSelectionAllowed(true);
         tbPesquisa.setName("tbPesquisa");
-        jScrollPane1.setViewportView(tbPesquisa);
+        spConsulta.setViewportView(tbPesquisa);
         tbPesquisa.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         buttonGroup1.add(rbLocal);
@@ -156,13 +250,14 @@ public class Consulta_Pesquisa extends javax.swing.JFrame {
             }
         });
 
-        lbNome.setText("Nome:");
+        txtCampoPesquisa.setName(" ");
 
-        jTextField1.setName("txtNome"); // NOI18N
-
-        lbDescricao.setText("Descrição: ");
-
-        jTextField2.setName("txtDescricao"); // NOI18N
+        btPesquisar.setText("Pesquisar");
+        btPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btPesquisarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -171,27 +266,21 @@ public class Consulta_Pesquisa extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE)
+                    .addComponent(spConsulta, javax.swing.GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(rbLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(rbObra, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(37, 37, 37)
-                                .addComponent(rbPersonagem)
-                                .addGap(42, 42, 42)
-                                .addComponent(rbTermo, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lbNome, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbDescricao))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
-                                    .addComponent(jTextField1))))
-                        .addGap(0, 66, Short.MAX_VALUE)))
+                        .addGap(12, 12, 12)
+                        .addComponent(rbLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rbObra, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37)
+                        .addComponent(rbPersonagem)
+                        .addGap(42, 42, 42)
+                        .addComponent(rbTermo, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(txtCampoPesquisa)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btPesquisar)))
                 .addContainerGap())
         );
 
@@ -205,17 +294,13 @@ public class Consulta_Pesquisa extends javax.swing.JFrame {
                     .addComponent(rbObra)
                     .addComponent(rbLocal)
                     .addComponent(rbPersonagem))
-                .addGap(12, 12, 12)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbNome)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbDescricao)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 496, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(txtCampoPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btPesquisar)
+                .addGap(7, 7, 7)
+                .addComponent(spConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 496, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {rbLocal, rbObra, rbPersonagem, rbTermo});
@@ -232,7 +317,7 @@ public class Consulta_Pesquisa extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -249,27 +334,40 @@ public class Consulta_Pesquisa extends javax.swing.JFrame {
 
     private void rbLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbLocalActionPerformed
         // TODO add your handling code here:
-        rbLocal();
+        LocalEscolhido();
     }//GEN-LAST:event_rbLocalActionPerformed
 
     private void rbObraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbObraActionPerformed
         // TODO add your handling code here:
-        rbObra();       
+        ObraEscolhido();
     }//GEN-LAST:event_rbObraActionPerformed
 
     private void rbPersonagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbPersonagemActionPerformed
         // TODO add your handling code here:
-        rbPersonagem();
+        PersonagemEscolhido();
     }//GEN-LAST:event_rbPersonagemActionPerformed
 
     private void rbTermoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbTermoActionPerformed
         // TODO add your handling code here:
-        rbTermo();
+        TermoEscolhido();
     }//GEN-LAST:event_rbTermoActionPerformed
-  
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowOpened
+
+    private void btPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarActionPerformed
+        // TODO add your handling code here:
+        String termoPesquisa = txtCampoPesquisa.getText().trim().toLowerCase();        
+        if(rbLocal.isSelected()){
+        pesquisarLocal(termoPesquisa);}
+    }//GEN-LAST:event_btPesquisarActionPerformed
+
+    
+    
     
     public static void main(String args[]) {
-        
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Consulta_Pesquisa().setVisible(true);
@@ -277,22 +375,87 @@ public class Consulta_Pesquisa extends javax.swing.JFrame {
         }
         );
     }
+    
+    private void pesquisarLocal(String termoPesquisa) {
   
+        DefaultTableModel localModel = (DefaultTableModel) tbPesquisa.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(localModel);
+        tbPesquisa.setRowSorter(sorter);    
+        for (Local dado : localList) {
+            if (dado.getNome().toLowerCase().contains(termoPesquisa) ||
+                dado.getDescricao().toLowerCase().contains(termoPesquisa) ||
+                dado.getDescricaoHistoria().toLowerCase().contains(termoPesquisa) ||
+                dado.getObras().get(0).toString().contains(termoPesquisa)) {
+                RowFilter<DefaultTableModel, Object> rowFilter = RowFilter.regexFilter("(?i)" + termoPesquisa);
+                 sorter.setRowFilter(rowFilter);
+            }
+        }
+    }
+
+    
+    private void pesquisarObra(String termoPesquisa) {
   
+        DefaultTableModel localModel = (DefaultTableModel) tbPesquisa.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(localModel);
+        tbPesquisa.setRowSorter(sorter); 
+        for (Obra dado : obralist) {
+            if (dado.getTitulo().toLowerCase().contains(termoPesquisa) ||
+                dado.getAnoLancamento().toLowerCase().contains(termoPesquisa) ||
+                dado.getCategoria().toLowerCase().contains(termoPesquisa)               ) {
+                RowFilter<DefaultTableModel, Object> rowFilter = RowFilter.regexFilter("(?i)" + termoPesquisa);
+                 sorter.setRowFilter(rowFilter);
+            }
+        }
+    }
+    
+    private void pesquisarPersonagem(String termoPesquisa) {
+        DefaultTableModel localModel = (DefaultTableModel) tbPesquisa.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(localModel);
+        tbPesquisa.setRowSorter(sorter);
+        for (Personagem  dado : personagemlist) {
+            for (String ator : dado.getAtores()) {
+                
+            if (dado.getNome().toLowerCase().contains(termoPesquisa) ||
+                dado.getDescricao().toLowerCase().contains(termoPesquisa) ||
+                dado.getCaracteristicas().toLowerCase().contains(termoPesquisa) ||        
+                dado.getAtores().get(0).toString().contains(termoPesquisa)|| 
+                dado.getFeitos().toString().toLowerCase().contains(termoPesquisa)|| 
+                dado.getObras().get(0).toString().contains(termoPesquisa)) {
+                RowFilter<DefaultTableModel, Object> rowFilter = RowFilter.regexFilter("(?i)" + termoPesquisa);
+                 sorter.setRowFilter(rowFilter);
+            }
+        }
+      }
+    }
+    
+    private void pesquisarTermo(String termoPesquisa) {
+        DefaultTableModel localModel = (DefaultTableModel) tbPesquisa.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(localModel);
+        tbPesquisa.setRowSorter(sorter);
+        for (Termo  dado : termolist) {
+            if (dado.getNome().toLowerCase().contains(termoPesquisa) ||
+                dado.getDescricao().toLowerCase().contains(termoPesquisa) ||
+                dado.getObras().get(0).toString().contains(termoPesquisa)) {
+                RowFilter<DefaultTableModel, Object> rowFilter = RowFilter.regexFilter("(?i)" + termoPesquisa);
+                 sorter.setRowFilter(rowFilter);
+            }
+        }
+    
+    }   
+
+       
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btPesquisar;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private java.awt.Label label1;
-    private javax.swing.JLabel lbDescricao;
-    private javax.swing.JLabel lbNome;
     private javax.swing.JRadioButton rbLocal;
     private javax.swing.JRadioButton rbObra;
     private javax.swing.JRadioButton rbPersonagem;
     private javax.swing.JRadioButton rbTermo;
+    private javax.swing.JScrollPane spConsulta;
     private javax.swing.JTable tbPesquisa;
+    private javax.swing.JTextField txtCampoPesquisa;
     // End of variables declaration//GEN-END:variables
 }
