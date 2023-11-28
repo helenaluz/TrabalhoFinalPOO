@@ -36,7 +36,7 @@ public class LocalTableModel extends AbstractTableModel {
        switch(columnIndex){
            case 0: return local.getNome();
            case 1: return local.getDescricao();
-           case 2: return local.getObras();
+           case 2: return termo.getObras().get(0).getTitulo();
            case 3: return local.getDescricao();
            default: return null;
        }
