@@ -37,7 +37,7 @@ public class PersonagemTableModel extends AbstractTableModel{
        switch(columnIndex){
            case 0: return personagem.getNome();
            case 1: return personagem.getDescricao();
-           case 2: return return termo.getObras().get(0).getTitulo();
+           case 2: return personagem.getObras().get(0).getTitulo();
            case 3: return personagem.getCaracteristicas();
            case 4: return personagem.getAtores();
            case 5: return personagem.getFeitos();
