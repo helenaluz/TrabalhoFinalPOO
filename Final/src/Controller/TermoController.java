@@ -97,6 +97,7 @@ public class TermoController {
         }
     }
 
+
     public void AdicionarLocal(String nome, String descricao, Obra obra, String descricaoHistorica) {
         try {
             Local local = new Local(nome, descricao, obra, descricaoHistorica);

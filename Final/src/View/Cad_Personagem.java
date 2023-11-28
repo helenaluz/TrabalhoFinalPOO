@@ -5,21 +5,36 @@
 package View;
 
 import javax.swing.JOptionPane;
-import Controller.TermoController;
+import Controller.PersonagemController;
+import java.util.ArrayList;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.DefaultComboBoxModel; 
 import model.Obra;
+import model.Personagem;
+import model.Tabelas.PersonagemTableModel;
+import Controller.ObraController; 
+import javax.print.DocFlavor;
+import javax.swing.JComboBox;
+
 /**
  *
  * @author duda2
  */
 public class Cad_Personagem extends javax.swing.JFrame {
-
+    
     public Cad_Personagem() {
         initComponents();
+        PreencheCombo();
+        Tabela(3);
     }
-     
     
-      TermoController termo = new TermoController(); 
+    PersonagemController personagemController = new PersonagemController(); 
+    ArrayList<Personagem> personagem = personagemController.PegarTodospersonagens();    
+    ObraController obraController = new ObraController(); 
+    ArrayList<Obra> obra = obraController.PegarTodasObras();
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,8 +48,6 @@ public class Cad_Personagem extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jComboBox1 = new javax.swing.JComboBox<>();
         pnPersonagem = new javax.swing.JPanel();
-        spPersonagem = new javax.swing.JScrollPane();
-        tbPersonagem = new javax.swing.JTable();
         pnCadPersonagem = new java.awt.Panel();
         lbNome = new javax.swing.JLabel();
         lbDescricao = new javax.swing.JLabel();
@@ -46,9 +59,11 @@ public class Cad_Personagem extends javax.swing.JFrame {
         txtCaracteristica = new javax.swing.JTextField();
         txtAtor = new javax.swing.JTextField();
         txtFeitos = new javax.swing.JTextField();
-        btIncluir = new javax.swing.JButton();
         lbObra = new javax.swing.JLabel();
         cbObra = new javax.swing.JComboBox<>();
+        spPersonagem = new javax.swing.JScrollPane();
+        tbPersonagem = new javax.swing.JTable();
+        btIncluir = new javax.swing.JButton();
         btRemover = new javax.swing.JButton();
         lbTituloTela = new java.awt.Label();
 
@@ -61,27 +76,6 @@ public class Cad_Personagem extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         pnPersonagem.setName("pnPersonagem");
-
-        tbPersonagem.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Nome", "Descrição", "Características", "Ator", "Feitos"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        spPersonagem.setViewportView(tbPersonagem);
 
         lbNome.setText("Nome:");
         lbNome.setToolTipText("");
@@ -110,6 +104,31 @@ public class Cad_Personagem extends javax.swing.JFrame {
 
         txtFeitos.setName("txtfeitos"); // NOI18N
 
+        lbObra.setText("Obra");
+
+        cbObra.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        tbPersonagem.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Nome", "Descrição", "Características", "Ator", "Feitos", "Obra"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        spPersonagem.setViewportView(tbPersonagem);
+
         btIncluir.setText("Incluir");
         btIncluir.setName("btsalvar"); // NOI18N
         btIncluir.addActionListener(new java.awt.event.ActionListener() {
@@ -118,9 +137,13 @@ public class Cad_Personagem extends javax.swing.JFrame {
             }
         });
 
-        lbObra.setText("Obra");
-
-        cbObra.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        btRemover.setText("Remover");
+        btRemover.setName("btRemover"); // NOI18N
+        btRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btRemoverActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnCadPersonagemLayout = new javax.swing.GroupLayout(pnCadPersonagem);
         pnCadPersonagem.setLayout(pnCadPersonagemLayout);
@@ -129,28 +152,35 @@ public class Cad_Personagem extends javax.swing.JFrame {
             .addGroup(pnCadPersonagemLayout.createSequentialGroup()
                 .addGroup(pnCadPersonagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnCadPersonagemLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(pnCadPersonagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lbNome, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbDescricao)
-                            .addComponent(lbCaracteristicas)
-                            .addComponent(lbAtor, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbFeitos, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(pnCadPersonagemLayout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addComponent(lbObra, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(pnCadPersonagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnCadPersonagemLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(pnCadPersonagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lbNome, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbDescricao)
+                                    .addComponent(lbCaracteristicas)
+                                    .addComponent(lbAtor, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbFeitos, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(pnCadPersonagemLayout.createSequentialGroup()
+                                .addGap(41, 41, 41)
+                                .addComponent(lbObra, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnCadPersonagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbObra, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCaracteristica, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtAtor, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtFeitos, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 130, Short.MAX_VALUE))
+                    .addComponent(spPersonagem, javax.swing.GroupLayout.DEFAULT_SIZE, 689, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(pnCadPersonagemLayout.createSequentialGroup()
+                .addGap(224, 224, 224)
+                .addComponent(btIncluir)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnCadPersonagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnCadPersonagemLayout.createSequentialGroup()
-                        .addComponent(cbObra, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btIncluir))
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCaracteristica, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtAtor, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtFeitos, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addComponent(btRemover)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnCadPersonagemLayout.setVerticalGroup(
             pnCadPersonagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,55 +205,32 @@ public class Cad_Personagem extends javax.swing.JFrame {
                 .addGroup(pnCadPersonagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbFeitos)
                     .addComponent(txtFeitos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(pnCadPersonagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnCadPersonagemLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(btIncluir))
-                    .addGroup(pnCadPersonagemLayout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addGroup(pnCadPersonagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lbObra)
-                            .addComponent(cbObra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(18, 18, 18))
+                .addGap(4, 4, 4)
+                .addGroup(pnCadPersonagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbObra)
+                    .addComponent(cbObra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(spPersonagem, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnCadPersonagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btIncluir)
+                    .addComponent(btRemover))
+                .addGap(107, 107, 107))
         );
-
-        btRemover.setText("Remover");
-        btRemover.setName("btRemover"); // NOI18N
-        btRemover.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btRemoverActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout pnPersonagemLayout = new javax.swing.GroupLayout(pnPersonagem);
         pnPersonagem.setLayout(pnPersonagemLayout);
         pnPersonagemLayout.setHorizontalGroup(
             pnPersonagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnPersonagemLayout.createSequentialGroup()
-                .addGroup(pnPersonagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnPersonagemLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(spPersonagem, javax.swing.GroupLayout.DEFAULT_SIZE, 689, Short.MAX_VALUE))
-                    .addGroup(pnPersonagemLayout.createSequentialGroup()
-                        .addGroup(pnPersonagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnPersonagemLayout.createSequentialGroup()
-                                .addGap(52, 52, 52)
-                                .addComponent(pnCadPersonagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnPersonagemLayout.createSequentialGroup()
-                                .addGap(304, 304, 304)
-                                .addComponent(btRemover)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addComponent(pnCadPersonagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 106, Short.MAX_VALUE))
         );
         pnPersonagemLayout.setVerticalGroup(
             pnPersonagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnPersonagemLayout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(pnCadPersonagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
-                .addComponent(spPersonagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(btRemover))
+                .addGap(0, 493, Short.MAX_VALUE))
         );
 
         lbTituloTela.setAlignment(java.awt.Label.CENTER);
@@ -240,14 +247,14 @@ public class Cad_Personagem extends javax.swing.JFrame {
                         .addGap(17, 17, 17)
                         .addComponent(pnPersonagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(82, 82, 82)
+                        .addGap(58, 58, 58)
                         .addComponent(lbTituloTela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(33, Short.MAX_VALUE)
+                .addContainerGap(20, Short.MAX_VALUE)
                 .addComponent(lbTituloTela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnPersonagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -259,86 +266,142 @@ public class Cad_Personagem extends javax.swing.JFrame {
 
     private void btIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btIncluirActionPerformed
         // TODO add your handling code here:
+        try{
         VerificaCampo();
-        termo.AdicionarPersonagem(txtNome.getText(), txtDescricao.getText(), (Obra) cbObra.getSelectedItem(),
-                                  txtCaracteristica.getText(),
-                                  txtAtor.getText(), 
-                                  txtFeitos.getText()
-                                 );        
-     Tabela(1);
+        Acoes(1);
+        }
+        catch(IllegalArgumentException e){
+           JOptionPane.showMessageDialog(null, "Ocorreu uma exceção:\n" + e.toString(), "Exceção", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btIncluirActionPerformed
 
     private void btRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverActionPerformed
         // TODO add your handling code here:
-        Tabela(2);
+         try{          
+         Acoes(2);
+        }
+        catch(IllegalArgumentException e){
+           JOptionPane.showMessageDialog(null, "Ocorreu uma exceção:\n" + e.toString(), "Exceção", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btRemoverActionPerformed
-
-     private void Tabela(int SAU){
-        int sau = SAU;
+    
+    private void Tabela(int Crud) {        
+        DefaultTableModel Personagem = (DefaultTableModel) tbPersonagem.getModel();
+        Personagem.setColumnIdentifiers(new Object[]{"Nome", "Descricao", "Obra", "Característica", "Ator", "Feitos", "Obras"});        
         
-        switch (sau) {
+        switch (Crud) {
             case 1:
-                 DefaultTableModel Personagens = (DefaultTableModel) tbPersonagem.getModel();    
-                 String[] newrow = {txtNome.getText(), txtDescricao.getText(), (String) cbObra.getSelectedItem(),
-                       txtCaracteristica.getText(), txtAtor.getText(),  txtFeitos.getText()};
-                 Personagens.addRow(newrow);         
-                break;
+                String[] newrow = {txtNome.getText(), txtDescricao.getText(),
+                        txtCaracteristica.getText(), txtAtor.getText(), txtFeitos.getText(), (String) cbObra.getSelectedItem()};
+                Personagem.addRow(newrow);
+                break;   
             case 2:
-             int result = JOptionPane.showConfirmDialog(null,"Deseja Excluir a linha ? ","Excluir",JOptionPane.YES_NO_CANCEL_OPTION); 
-             if(result == JOptionPane.YES_OPTION){               
-                int linhaSelecionada = tbPersonagem.getSelectedRow();
-             if (linhaSelecionada != -1) { // se não estiver em  nenhuma linha então 
-                   ((DefaultTableModel) tbPersonagem.getModel()).removeRow(linhaSelecionada);
-            }
-            }   
+                int result = JOptionPane.showConfirmDialog(null, "Deseja Excluir a linha ? ", "Excluir", JOptionPane.YES_NO_CANCEL_OPTION);                
+                if (result == JOptionPane.YES_OPTION) {                    
+                    int linhaSelecionada = tbPersonagem.getSelectedRow();
+                    if (linhaSelecionada != -1) { // se não estiver em  nenhuma linha então 
+                        ((DefaultTableModel) tbPersonagem.getModel()).removeRow(linhaSelecionada);
+                    }
+                }                
+                break;            
+            case 3:                
+                for (Personagem dado : personagem) {
+                    Personagem.addRow(new Object[]{dado.getNome(), dado.getDescricao(), dado.getObras(), dado.getCaracteristicas(), dado.getAtores(), dado.getFeitos()});
+                }
+                tbPersonagem = new JTable(new PersonagemTableModel(personagem));
+                spPersonagem = new JScrollPane(tbPersonagem);
+                getContentPane().add(spPersonagem);
+                break;            
             default:
-                throw new  IllegalArgumentException("Tentou né");
+                throw new IllegalArgumentException("Tentou né");
         }
     };
-            
-    private String VerificaCampo(){
-        String VerificaCampo = " " ; 
-        
-        
-       if (txtNome.getText().equals("") || txtDescricao.getText().equals("") || 
-          txtCaracteristica.getText().equals("") || txtAtor.getText().equals("") ||
-           txtFeitos.getText().equals("") || cbObra.getSelectedItem().equals(" ")){
-           
-         VerificaCampo = "Campos que precisam ser preenchidos:";
+    
+    public void PreencheCombo(){
+       cbObra.removeAllItems();        
+       for(Obra obras : obra){
+         cbObra.addItem(obras.getTitulo());
+       }       
+    }; 
          
-         if(txtNome.getText().equals("")){
-             VerificaCampo +=  "\nCampo nome está vazio.";               
-         }
-         if(txtDescricao.getText().equals("")){
-             VerificaCampo += "\nCampo descrição está vazio.";               
-         }
-         if(txtCaracteristica.getText().equals("")){
-             VerificaCampo += "\nCampo características  está vazio.";               
-         }
-         if(txtAtor.getText().equals("")){
-             VerificaCampo += "\nCampo ator está vazio.";    
-         }
-         if(txtFeitos.getText().equals("")){
-             VerificaCampo += "\nCampo feitos está vazio.";  
-         }
-         if(cbObra.getSelectedItem().equals("")){
-              VerificaCampo += "\nCampo obra está vazio.";  
-         }
-         
-           JOptionPane.showMessageDialog(this,  VerificaCampo , "ERRO",  JOptionPane.ERROR_MESSAGE);
-       }
-       
-        return VerificaCampo;
+     
+     public void Acoes(int Crud) {
+        switch (Crud) {
+            case 1:
+                String selectedObraTitulo = (String) cbObra.getSelectedItem();
+                Obra selectedObra = obraController.VerObraPorTitulo(selectedObraTitulo);    
+                personagemController.Adicionarpersonagem(txtNome.getText(), txtDescricao.getText(), 
+                        selectedObra,
+                        txtCaracteristica.getText(),
+                        txtAtor.getText(),
+                        txtFeitos.getText()
+                        );                
+                Tabela(1);   
+                break;
+            case 2:                  
+                 int linhaselecionada = tbPersonagem.getSelectedRow();
+                if (linhaselecionada != -1) {
+                    String nomePersonagem = (String) tbPersonagem.getValueAt(linhaselecionada, 0);
+                    obraController.RemoverObra(nomePersonagem);
+                    ((DefaultTableModel) tbPersonagem.getModel()).removeRow(linhaselecionada);
+                }
+                break;               
+            default:
+                throw new AssertionError();
+        }
+        
     }
     
+    private String VerificaCampo() {
+        String VerificaCampo = " ";        
+        
+        if (txtNome.getText().equals("") || txtDescricao.getText().equals("")
+                || txtCaracteristica.getText().equals("") || txtAtor.getText().equals("")
+                || txtFeitos.getText().equals("") || cbObra.getSelectedItem().equals(" ")) {
+            
+            VerificaCampo = "Campos que precisam ser preenchidos:";
+            
+            if (txtNome.getText().equals("")) {
+                VerificaCampo += "\nCampo nome está vazio.";                
+            }
+            if (txtDescricao.getText().equals("")) {
+                VerificaCampo += "\nCampo descrição está vazio.";                
+            }
+            if (txtCaracteristica.getText().equals("")) {
+                VerificaCampo += "\nCampo características  está vazio.";                
+            }
+            if (txtAtor.getText().equals("")) {
+                VerificaCampo += "\nCampo ator está vazio.";                
+            }
+            if (txtFeitos.getText().equals("")) {
+                VerificaCampo += "\nCampo feitos está vazio.";                
+            }
+            if (cbObra.getSelectedItem().equals("")) {
+                VerificaCampo += "\nCampo obra está vazio.";                
+            }
+            
+            JOptionPane.showMessageDialog(this, VerificaCampo, "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        return VerificaCampo;
+    }
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) { 
+        
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Cad_Personagem().setVisible(true);
+              Cad_Personagem cadpersonagem = new Cad_Personagem();  
+                
+               if(cadpersonagem.obra != null && !cadpersonagem.obra.isEmpty()){
+                  new Cad_Personagem().setVisible(true);
+               }
+               else{
+                JOptionPane.showMessageDialog(null, "Não há pobras cadastradas no sistema ", "ERROR", JOptionPane.ERROR_MESSAGE);
+               }
             }
         });
     }

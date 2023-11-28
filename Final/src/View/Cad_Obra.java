@@ -6,7 +6,15 @@ package View;
 
 import javax.swing.JOptionPane;
 import Controller.ObraController;
+import java.io.BufferedReader;
 import javax.swing.table.DefaultTableModel;
+import model.Obra;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import model.Tabelas.ObraTableModel;
 
 /**
  *
@@ -19,9 +27,12 @@ public class Cad_Obra extends javax.swing.JFrame {
      */
     public Cad_Obra() {
         initComponents();
+        Tabela(3);
     }
-    
-    ObraController obra = new ObraController(); 
+
+    ObraController obraController = new ObraController();
+    ArrayList<Obra> obra = obraController.PegarTodasObras();
+    Obra obras = new Obra();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -73,67 +84,19 @@ public class Cad_Obra extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout pnCadObraLayout = new javax.swing.GroupLayout(pnCadObra);
-        pnCadObra.setLayout(pnCadObraLayout);
-        pnCadObraLayout.setHorizontalGroup(
-            pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnCadObraLayout.createSequentialGroup()
-                .addGroup(pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnCadObraLayout.createSequentialGroup()
-                        .addGap(79, 79, 79)
-                        .addComponent(lbTitulo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtTitulo))
-                    .addGroup(pnCadObraLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbCategoria, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lbAnoLancamento, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtAnoLanca)
-                            .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btIncluir))))
-                .addContainerGap(214, Short.MAX_VALUE))
-        );
-
-        pnCadObraLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtAnoLanca, txtTitulo});
-
-        pnCadObraLayout.setVerticalGroup(
-            pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnCadObraLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbTitulo)
-                    .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbAnoLancamento)
-                    .addComponent(txtAnoLanca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbCategoria)
-                    .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addComponent(btIncluir)
-                .addContainerGap(66, Short.MAX_VALUE))
-        );
-
-        pnCadObraLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtAnoLanca, txtTitulo});
-
         tbObra.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Nome", "Descrição", "Título", "Ano de lançamento", "Categoria"
+                "Título", "Ano de lançamento", "Categoria"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -150,25 +113,74 @@ public class Cad_Obra extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout pnCadObraLayout = new javax.swing.GroupLayout(pnCadObra);
+        pnCadObra.setLayout(pnCadObraLayout);
+        pnCadObraLayout.setHorizontalGroup(
+            pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnCadObraLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbCategoria, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lbAnoLancamento, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtAnoLanca, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
+                    .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(138, Short.MAX_VALUE))
+            .addGroup(pnCadObraLayout.createSequentialGroup()
+                .addGap(79, 79, 79)
+                .addComponent(lbTitulo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtTitulo)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnCadObraLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(spObra, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(pnCadObraLayout.createSequentialGroup()
+                .addGap(131, 131, 131)
+                .addComponent(btIncluir)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btRemover)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pnCadObraLayout.setVerticalGroup(
+            pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnCadObraLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbTitulo)
+                    .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbAnoLancamento)
+                    .addComponent(txtAnoLanca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbCategoria)
+                    .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(spObra, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnCadObraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btIncluir)
+                    .addComponent(btRemover))
+                .addContainerGap(365, Short.MAX_VALUE))
+        );
+
+        pnCadObraLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtAnoLanca, txtTitulo});
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(spObra, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(80, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pnCadObra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addComponent(lbTituloTela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(198, 198, 198)
-                .addComponent(btRemover)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(pnCadObra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addComponent(lbTituloTela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -178,81 +190,109 @@ public class Cad_Obra extends javax.swing.JFrame {
                 .addComponent(lbTituloTela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22)
                 .addComponent(pnCadObra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(spObra, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btRemover)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btIncluirActionPerformed
-        // TODO add your handling code here:
+       try{
         VerificaCampo();
-        obra.AdicionarObra(txtTitulo.getText(),
-                         txtAnoLanca.getText(),
-                          txtCategoria.getText());
-        
-        
-   
-        Tabela(1);
+        Acoes(1);
+        }
+        catch(IllegalArgumentException e){
+           JOptionPane.showMessageDialog(null, "Ocorreu uma exceção:\n" + e.toString(), "Exceção", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btIncluirActionPerformed
 
     private void btRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverActionPerformed
-        // TODO add your handling code here:
-        
-        Tabela(2);
+         try{          
+         Acoes(2);
+        }
+        catch(IllegalArgumentException e){
+           JOptionPane.showMessageDialog(null, "Ocorreu uma exceção:\n" + e.toString(), "Exceção", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btRemoverActionPerformed
 
-    private void Tabela(int SAU){
-        int sau = SAU;
-        
-        switch (sau) {
-            case 1:
-                DefaultTableModel Obras = (DefaultTableModel) tbObra.getModel();    
-                 String[] newrow = {txtTitulo.getText(),txtAnoLanca.getText(),txtCategoria.getText()};
-                 Obras.addRow(newrow);          
+    public void Tabela(int Crud) {
+         DefaultTableModel Obras = (DefaultTableModel) tbObra.getModel();
+         Obras.setColumnIdentifiers(new Object[]{"Título", "Ano de lançamento", "Categoria"});
+        switch (Crud) {
+            case 1: // salva  
+                String[] newrow = {txtTitulo.getText(), txtAnoLanca.getText(), txtCategoria.getText()};
+                Obras.addRow(newrow);
                 break;
-            case 2:
-             int result = JOptionPane.showConfirmDialog(null,"Deseja Excluir a linha ? ","Excluir",JOptionPane.YES_NO_CANCEL_OPTION); 
-             if(result == JOptionPane.YES_OPTION){               
-                int linhaSelecionada = tbObra.getSelectedRow();
-             if (linhaSelecionada != -1) { // se não estiver em  nenhuma linha então 
-                   ((DefaultTableModel) tbObra.getModel()).removeRow(linhaSelecionada);
-               }
-             }   
+            case 2: // apaga 
+                int result = JOptionPane.showConfirmDialog(null, "Deseja Excluir a linha ? ", "Excluir", JOptionPane.YES_NO_CANCEL_OPTION);
+                if (result == JOptionPane.YES_OPTION) {
+                    int linhaSelecionada = tbObra.getSelectedRow();
+                    if (linhaSelecionada != -1) { // se não estiver em  nenhuma linha então 
+                         
+                        
+                        ((DefaultTableModel) tbObra.getModel()).removeRow(linhaSelecionada);
+                    }
+                }
+                break;
+            case 3:  // preenche tabela                  
+                for (Obra dado : obra) {
+                    Obras.addRow(new Object[]{dado.getTitulo(), dado.getAnoLancamento(), dado.getCategoria()});
+                }         
+                break;
             default:
-                throw new  IllegalArgumentException("Tentou né");
+                throw new IllegalArgumentException("Tentou né");
         }
     };
-        
     
-    public String VerificaCampo(){
-       String VerificaCampo = " " ; 
-        
-       if (txtTitulo.getText().equals("") || txtAnoLanca.getText().equals("") ||
-          txtCategoria.getText().equals(" ") ){
-           
-         VerificaCampo = "Campos que precisam ser preenchidos:";
-        
-         if(txtTitulo.getText().equals("")){
-             VerificaCampo += "\nCampo título detalhada está vazio.";               
-         }
-          if(txtAnoLanca.getText().equals("")){
-             VerificaCampo += "\nCampo ano de lançamento está vazio.";               
-         }
-          if(txtCategoria.getText().equals(" ")){
-               VerificaCampo += "\nCampo categoria está vazio.";         
-          }
-                    
-           JOptionPane.showMessageDialog(this,  VerificaCampo , "ERRO",  JOptionPane.ERROR_MESSAGE);
-          
-       }
-        return VerificaCampo; 
+   
+    
+    public void Acoes(int acoes) {
+
+        switch (acoes) {
+            case 1: // adicionando 
+                obraController.AdicionarObra(txtTitulo.getText(),
+                        txtAnoLanca.getText(),
+                        txtCategoria.getText());
+                Tabela(1);
+                break;
+            case 2: // removendo 
+                  int linhaselecionada = tbObra.getSelectedRow();
+                if (linhaselecionada != -1) {
+                    String nomeObra = (String) tbObra.getValueAt(linhaselecionada, 0);
+                    obraController.RemoverObra(nomeObra);
+                    ((DefaultTableModel) tbObra.getModel()).removeRow(linhaselecionada);
+                }
+                break;
+            default:
+                throw new IllegalArgumentException("Error");
+        }
+
     }
-    
+
+    public String VerificaCampo() {
+        String VerificaCampo = " ";
+
+        if (txtTitulo.getText().equals("") || txtAnoLanca.getText().equals("")
+                || txtCategoria.getText().equals(" ")) {
+
+            VerificaCampo = "Campos que precisam ser preenchidos:";
+
+            if (txtTitulo.getText().equals("")) {
+                VerificaCampo += "\nCampo título detalhada está vazio.";
+            }
+            if (txtAnoLanca.getText().equals("")) {
+                VerificaCampo += "\nCampo ano de lançamento está vazio.";
+            }
+            if (txtCategoria.getText().equals(" ")) {
+                VerificaCampo += "\nCampo categoria está vazio.";
+            }
+
+            JOptionPane.showMessageDialog(this, VerificaCampo, "ERRO", JOptionPane.ERROR_MESSAGE);
+
+        }
+        return VerificaCampo;
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -287,8 +327,7 @@ public class Cad_Obra extends javax.swing.JFrame {
             }
         });
     }
-    
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btIncluir;

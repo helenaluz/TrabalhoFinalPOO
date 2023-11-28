@@ -21,18 +21,14 @@ public class main {
   
     
     public static void main(String[] args) {
-       // Telas_Iniciais inicial = new Telas_Iniciais(); 
-       // inicial.setVisible(true);
-        ObraController obra = new ObraController();
-        ArrayList<Obra> oi = obra.PegarTodasObras();
-        PersonagemController personagem = new PersonagemController();
-        personagem.Adicionarpersonagem("ola", "sdf", oi.get(1), "sedrf", "dtgh", "ewf");
-        personagem.Removerpersonagem("pito");
-        ArrayList<Personagem> ola = personagem.PegarTodospersonagens();
-        for(int i =0; i < ola.size(); i++){
-            System.out.println(ola.get(i).getNome());
-        }
-      
+       Telas_Iniciais inicial = new Telas_Iniciais(); 
+       inicial.setVisible(true);
+       PersonagemController personagem = new PersonagemController(); 
+       ObraController obras = new ObraController(); 
+       //obras.AdicionarObra("A culpa", "2015", "Romance");
+      // Obra obra = obras.VerObraPorTitulo("A culpa");
+       //personagem.Adicionarpersonagem("duda", "descrição", obra ,"tenta", "at", "feitos");
+       
     }
     
     
