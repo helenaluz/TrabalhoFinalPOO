@@ -24,8 +24,12 @@ public class TermoController {
         carregarTermosDoArquivo();
     }
 
-  
-    
+    /**
+     * Adiciona termo no arquivo
+     * @param nome
+     * @param descricao
+     * @param obra
+     */
     public void AdicionarTermo(String nome, String descricao, Obra obra) {
         try {
             Termo termo = new Termo(nome, descricao, obra);
@@ -38,6 +42,10 @@ public class TermoController {
         }
     }
 
+    /**
+     * Remove o termo com tal nome no aquivo
+     * @param nome
+     */
     public void RemoverTermo(String nome) {
         Termo termo = this.VerTermosPorNome(nome);
         try {
@@ -51,6 +59,11 @@ public class TermoController {
         }
     }
 
+    /**
+     * Ver o termo com tal nome no arquivo
+     * @param nome
+     * @return termo
+     */
     public Termo VerTermosPorNome(String nome) {
         try {
             return termos.stream()
@@ -63,6 +76,10 @@ public class TermoController {
         }
     }
 
+    /**
+     * Retorna os termos do aqruivo
+     * @return Lista de termos
+     */
     public ArrayList<Termo> PegarTodosTermos() {
         try {
             if (termos.isEmpty()) {
@@ -72,36 +89,6 @@ public class TermoController {
         } catch (IllegalArgumentException e) {
             System.err.println(e.getMessage());
             return new ArrayList<>();
-        }
-    }
-
-    public void AdicionarPersonagem(String nome, String descricao, Obra obra, String caracteristicas, String ator, String feitos) {
-        try {
-            Personagem personagem = new Personagem(nome, descricao, obra, caracteristicas, ator, feitos);
-
-            if (termos.stream().anyMatch(x -> x.getNome().equals(nome))) {
-                throw new IllegalArgumentException("Personagem com o mesmo nome já existe na coleção!");
-            }
-
-            termos.add(personagem);
-            atualizarArquivo();
-        } catch (IllegalArgumentException e) {
-            System.err.println(e.getMessage());
-        }
-    }
-
-    public void AdicionarLocal(String nome, String descricao, Obra obra, String descricaoHistorica) {
-        try {
-            Local local = new Local(nome, descricao, obra, descricaoHistorica);
-
-            if (termos.stream().anyMatch(x -> x.getNome().equals(nome))) {
-                throw new IllegalArgumentException("Local com o mesmo nome já existe na coleção!");
-            }
-
-            termos.add(local);
-            atualizarArquivo();
-        } catch (IllegalArgumentException e) {
-            System.err.println(e.getMessage());
         }
     }
 
