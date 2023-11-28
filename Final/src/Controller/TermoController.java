@@ -17,7 +17,7 @@ import model.Termo;
 public class TermoController {
 
     private static final String FILE_PATH = "termos.csv";
-    public ArrayList<Termo> termos = new ArrayList<>();
+    public static ArrayList<Termo> termos = new ArrayList<>();
     public ObraController obraController = new ObraController();
 
     public TermoController() {
@@ -29,15 +29,8 @@ public class TermoController {
     public void AdicionarTermo(String nome, String descricao, Obra obra) {
         try {
             Termo termo = new Termo(nome, descricao, obra);
-
-            if (termos.stream().anyMatch(x -> x.getNome().equals(termo.getNome()))) {
-                throw new IllegalArgumentException("Termo com o mesmo nome já existe na coleção!");
-            }
-
-            if (!obraController.obras.stream().anyMatch(x -> x.getTitulo().equals(obra.getTitulo()))) {
-                throw new IllegalArgumentException("Obra não existe na coleção!");
-            }
-
+            if (termos.stream().anyMatch(x -> x.getNome().equals(termo.getNome()))) throw new IllegalArgumentException("Termo com o mesmo nome já existe na coleção!");
+            if (!obraController.obras.stream().anyMatch(x -> x.getTitulo().equals(obra.getTitulo()))) throw new IllegalArgumentException("Obra não existe na coleção!");
             termos.add(termo);
             atualizarArquivo();
         } catch (IllegalArgumentException e) {
