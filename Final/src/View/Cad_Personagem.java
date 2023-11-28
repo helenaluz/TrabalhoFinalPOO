@@ -338,13 +338,17 @@ public class Cad_Personagem extends javax.swing.JFrame {
                         );                
                 Tabela(1);   
                 break;
-            case 2:                  
+            case 2:            
+                  int result = JOptionPane.showConfirmDialog(null, "Deseja Excluir a linha ? ", "Excluir", JOptionPane.YES_NO_CANCEL_OPTION);                
+                if (result == JOptionPane.YES_OPTION) {  
                  int linhaselecionada = tbPersonagem.getSelectedRow();
                 if (linhaselecionada != -1) {
                     String nomePersonagem = (String) tbPersonagem.getValueAt(linhaselecionada, 0);
                     obraController.RemoverObra(nomePersonagem);
                     ((DefaultTableModel) tbPersonagem.getModel()).removeRow(linhaselecionada);
                 }
+                }
+               
                 break;               
             default:
                 throw new AssertionError();

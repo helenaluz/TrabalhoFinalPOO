@@ -36,7 +36,7 @@ public class TermoTableModel extends AbstractTableModel{
        switch(columnIndex){
            case 0: return termo.getNome();
            case 1: return termo.getDescricao();
-           case 2: return termo.getObras();
+           case 2: return termo.getObras().get(0).getTitulo();
            default: return null;
        }
     }

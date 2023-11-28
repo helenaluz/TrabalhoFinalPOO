@@ -36,7 +36,7 @@ public class Telas_Iniciais extends javax.swing.JFrame {
         btPesquisa = new javax.swing.JMenu();
         mnConsulta = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         pnPrincipal.addHierarchyListener(new java.awt.event.HierarchyListener() {
             public void hierarchyChanged(java.awt.event.HierarchyEvent evt) {

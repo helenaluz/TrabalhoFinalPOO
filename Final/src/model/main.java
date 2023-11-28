@@ -25,9 +25,7 @@ public class main {
        inicial.setVisible(true);
        PersonagemController personagem = new PersonagemController(); 
        ObraController obras = new ObraController(); 
-       //obras.AdicionarObra("A culpa", "2015", "Romance");
-      // Obra obra = obras.VerObraPorTitulo("A culpa");
-       //personagem.Adicionarpersonagem("duda", "descrição", obra ,"tenta", "at", "feitos");
+     
        
     }
     

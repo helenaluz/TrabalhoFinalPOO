@@ -32,7 +32,10 @@ public class LocalController {
         carregarLocaisDoArquivo();
     }
     
-
+    /**
+     * Remove o Local do arquivo
+     * @param nome
+     */
     public void Removerlocal(String nome) {
         Local local = this.VerlocaisPorNome(nome);
         try {
@@ -46,6 +49,11 @@ public class LocalController {
         }
     }
 
+    /**
+     * Pesquisa o Local por nome
+     * @param nome
+     * @return Local com nome especificado
+     */
     public Local VerlocaisPorNome(String nome) {
         try {
             return locais.stream()
@@ -58,6 +66,10 @@ public class LocalController {
         }
     }
 
+    /**
+     * Retorna todos os locais que estão no arquivo
+     * @return Lista de locais
+     */
     public ArrayList<Local> PegarTodoslocais() {
         try {
             if (locais.isEmpty()) {
@@ -70,8 +82,13 @@ public class LocalController {
         }
     }
 
-  
-
+    /**
+     * Adiciona um local no arquivo
+     * @param nome
+     * @param descricao
+     * @param obra
+     * @param descricaoHistorica
+     */
     public void AdicionarLocal(String nome, String descricao, Obra obra, String descricaoHistorica) {
         try {
             Local local = new Local(nome, descricao, obra, descricaoHistorica);

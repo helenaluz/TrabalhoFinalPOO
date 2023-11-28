@@ -248,7 +248,6 @@ public class Cad_Termo extends javax.swing.JFrame {
                 throw new IllegalArgumentException("Tentou né");
         }
     }
-
     ;
      
      
