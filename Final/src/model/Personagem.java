@@ -4,27 +4,31 @@
  */
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author duda2
  */
-public class Personagem  extends Termo{    
-    private ArrayList<String> caracteristicas = new ArrayList<String>();
+public class Personagem  extends Termo implements Serializable {    
     private ArrayList<String> atores = new ArrayList<String>();
     private String feitos; 
+    private String caracteristicas; 
 
     public Personagem(String nome, String descricao, Obra obra, String caracteristicas, String ator, String feitos){
         setCaracteristicas(caracteristicas);
         setAtores(ator);
         setFeitos(feitos);
-        super.setNome(nome);
-        super.AddObra(obra);
-        super.setDescricao(descricao);
+        setNome(nome);
+        AddObra(obra);
+        setDescricao(descricao);
     }
-    
-    public ArrayList<String> getCaracteristicas() {
+
+    public Personagem() {
+         }
+
+    public String getCaracteristicas() {
         return caracteristicas;
     }
 
@@ -32,10 +36,10 @@ public class Personagem  extends Termo{
         if (caracteristicas == null || caracteristicas.isEmpty()) {
             throw new IllegalArgumentException("A caracteristica não pode estar vazia");
         }   
-        this.caracteristicas.add(caracteristicas);
+        this.caracteristicas = caracteristicas;
     }
 
-    public ArrayList<String> getAtores() {
+    public ArrayList<String> getAtores() {        
         return atores;
     }
 
