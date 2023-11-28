@@ -25,6 +25,10 @@ public class PersonagemController {
         carregarpersonagensDoArquivo();
     }    
 
+    /**
+     * Remove prsonagem do arquivo
+     * @param nome
+     */
     public void Removerpersonagem(String nome) {
         Personagem personagem = this.VerpersonagensPorNome(nome);
         try {
@@ -38,6 +42,11 @@ public class PersonagemController {
         }
     }
 
+    /**
+     * Acha o personagem com esse nome
+     * @param nome
+     * @return personagen como nome nome
+     */
     public Personagem VerpersonagensPorNome(String nome) {
         try {
             return personagens.stream()
@@ -50,6 +59,10 @@ public class PersonagemController {
         }
     }
 
+    /**
+     * Retonr todos os personagens do arquivo
+     * @return Lista de ersonagem do arquivo
+     */
     public ArrayList<Personagem> PegarTodospersonagens() {
         try {
             if (personagens.isEmpty()) {
@@ -62,8 +75,15 @@ public class PersonagemController {
         }
     }
 
-  
-
+    /**
+     * Adiciona personagem no arquivo
+     * @param nome
+     * @param descricao
+     * @param obra
+     * @param caracteristicas
+     * @param ator
+     * @param feitos
+     */
     public void Adicionarpersonagem(String nome, String descricao, Obra obra, String caracteristicas, String ator, String feitos) {
         try {
             Personagem personagem = new Personagem(nome, descricao, obra, caracteristicas, ator, feitos);
